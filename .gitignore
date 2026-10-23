@@ -3,6 +3,8 @@ bin/
 obj/
 build.log
 *.log
+publish/
+.publishtest/
 
 # User-specific / IDE
 .vs/
