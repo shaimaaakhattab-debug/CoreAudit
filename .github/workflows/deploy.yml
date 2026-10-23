@@ -1,0 +1,64 @@
+name: Build and Deploy CoreAudit
+
+# Verified production branch: "main" is the repository's default branch and the
+# only branch on origin (confirmed via `git remote show origin`). Every push to
+# main builds, tests, and deploys to SmarterASP.NET via Web Deploy.
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  # Never let two deploys to the same site run at once.
+  group: deploy-production
+  cancel-in-progress: false
+
+env:
+  PROJECT: CoreAudit.csproj
+  TEST_PROJECT: CoreAudit.Tests/CoreAudit.Tests.csproj
+  PUBLISH_DIR: publish
+
+jobs:
+  build-test-deploy:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Setup .NET 8
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Restore
+        run: dotnet restore "${{ env.PROJECT }}"
+
+      - name: Build (Release)
+        run: dotnet build "${{ env.PROJECT }}" --configuration Release --no-restore
+
+      - name: Test
+        # Runs the xUnit suite in CoreAudit.Tests. Tests use mocked HTTP and never
+        # send real email, so this is safe in CI.
+        run: dotnet test "${{ env.TEST_PROJECT }}" --configuration Release
+
+      - name: Publish
+        run: dotnet publish "${{ env.PROJECT }}" --configuration Release --no-build --output "${{ env.PUBLISH_DIR }}"
+
+      - name: Deploy to SmarterASP.NET (Web Deploy)
+        # Wraps Microsoft Web Deploy; maps directly to the repository secrets.
+        # target-delete defaults to false, so unrelated files already on the host
+        # are NOT removed. App_Data (stored contact submissions) is skipped so a
+        # deploy never touches runtime data.
+        uses: rasmusbuchholdt/simply-web-deploy@2.2.0
+        with:
+          website-name: ${{ secrets.WEBSITE_NAME }}
+          server-computer-name: ${{ secrets.SERVER_COMPUTER_NAME }}
+          server-username: ${{ secrets.SERVER_USERNAME }}
+          server-password: ${{ secrets.SERVER_PASSWORD }}
+          source-path: '\publish\'
+          skip-directory-paths: 'App_Data'
