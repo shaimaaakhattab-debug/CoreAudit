@@ -1,0 +1,52 @@
+@model IReadOnlyList<CoreAudit.Models.ServiceItem>
+@{
+    ViewData["Title"] = "خدماتنا";
+    ViewData["MetaDescription"] = "خدمات جوهر المراجعة (Core Audit): المراجعة الخارجية، الخدمات المحاسبية، الاستشارات الضريبية والمالية، المراجعة الداخلية، التقارير المالية واستشارات الأعمال.";
+    var steps = ViewData["ProcessSteps"] as IReadOnlyList<CoreAudit.Models.ProcessStep>
+        ?? new List<CoreAudit.Models.ProcessStep>();
+}
+
+<section class="page-hero" aria-label="خدماتنا">
+    <div class="container">
+        <h1 class="page-hero-title">خدماتنا</h1>
+        <p class="page-hero-sub">خدمات مهنية متكاملة في المحاسبة والمراجعة والاستشارات المالية</p>
+    </div>
+</section>
+
+<section class="section" aria-label="قائمة الخدمات">
+    <div class="container">
+        <div class="row g-4">
+            @foreach (var service in Model)
+            {
+                <div class="col-md-6 col-lg-4">
+                    <partial name="_ServiceCard" model="service" />
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+<section class="section section-navy" aria-label="آلية عملنا">
+    <div class="container">
+        <div class="section-head text-center">
+            <span class="section-eyebrow light">كيف نعمل</span>
+            <h2 class="section-title text-white">آلية عملنا</h2>
+            <p class="section-subtitle light">رحلة واضحة من فهم احتياجاتك حتى عرض النتائج.</p>
+        </div>
+        <div class="row g-4 process-row">
+            @foreach (var step in steps)
+            {
+                <div class="col-md-6 col-lg-3">
+                    <div class="process-card h-100">
+                        <div class="process-number">@step.Number</div>
+                        <div class="process-icon" aria-hidden="true"><i class="bi @step.Icon"></i></div>
+                        <h3 class="h6 process-title">@step.TitleAr</h3>
+                        <p class="process-desc">@step.DescriptionAr</p>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+<partial name="_CtaSection" />

@@ -1,0 +1,13 @@
+@{
+    var heading = ViewData["CtaHeading"] as string ?? "دعنا نساعدك في اتخاذ قرارات مالية أكثر وضوحًا";
+    var text = ViewData["CtaText"] as string ?? "فريقنا المهني جاهز لمناقشة احتياجاتك وتقديم الدعم المناسب لأعمالك.";
+}
+<section class="cta-section" aria-label="دعوة للتواصل">
+    <div class="container text-center">
+        <h2 class="cta-heading">@heading</h2>
+        <p class="cta-text">@text</p>
+        <a class="btn btn-gold btn-lg" asp-controller="Contact" asp-action="Index">
+            <i class="bi bi-chat-dots ms-1" aria-hidden="true"></i> تواصل معنا
+        </a>
+    </div>
+</section>

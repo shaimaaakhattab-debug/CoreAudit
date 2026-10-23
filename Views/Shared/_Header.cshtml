@@ -1,0 +1,39 @@
+@{
+    var site = SiteOptions.Value;
+    var controller = ViewContext.RouteData.Values["controller"]?.ToString();
+    string Active(string c) => string.Equals(controller, c, StringComparison.OrdinalIgnoreCase) ? "active" : "";
+}
+<header class="site-header">
+    <nav class="navbar navbar-expand-lg" aria-label="التنقل الرئيسي">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" asp-controller="Home" asp-action="Index" aria-label="@site.BrandNameAr - الصفحة الرئيسية">
+                <img src="@site.LogoPath" alt="شعار @site.BrandNameAr - @site.BrandNameEn" class="brand-logo" />
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"
+                    aria-controls="mainNav" aria-expanded="false" aria-label="فتح القائمة">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="mainNav">
+                <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link @Active("Home")" asp-controller="Home" asp-action="Index">الرئيسية</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link @Active("About")" asp-controller="About" asp-action="Index">من نحن</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link @Active("Services")" asp-controller="Services" asp-action="Index">خدماتنا</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link @Active("Contact")" asp-controller="Contact" asp-action="Index">تواصل معنا</a>
+                    </li>
+                </ul>
+                <a class="btn btn-gold btn-cta" asp-controller="Contact" asp-action="Index">
+                    <i class="bi bi-chat-dots ms-1" aria-hidden="true"></i> اطلب استشارة
+                </a>
+            </div>
+        </div>
+    </nav>
+</header>

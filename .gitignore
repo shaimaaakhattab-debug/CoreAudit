@@ -1,0 +1,27 @@
+# Build output
+bin/
+obj/
+build.log
+*.log
+
+# User-specific / IDE
+.vs/
+.vscode/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Environment-specific secrets (do NOT commit)
+appsettings.Production.json
+appsettings.*.Local.json
+*.env
+.env
+secrets.json
+*.pfx
+*.p12
+*.key
+*.pem
+
+# Locally stored contact submissions (customer PII — never commit)
+App_Data/

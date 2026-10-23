@@ -1,0 +1,67 @@
+@using CoreAudit.Services
+@inject IContentService ContentService
+@{
+    var site = SiteOptions.Value;
+    var footerServices = ContentService.GetServices();
+    var phoneTel = "tel:" + site.Phone;
+}
+<footer class="site-footer">
+    <div class="container">
+        <div class="row gy-4">
+            <div class="col-lg-4">
+                <img src="@site.LogoPath" alt="شعار @site.BrandNameAr - @site.BrandNameEn" class="footer-logo mb-3" />
+                <h2 class="footer-brand h5">@site.BrandNameAr</h2>
+                <p class="footer-sub">@site.BrandSubtitleAr</p>
+                <p class="footer-desc">
+                    مكتب مهني متخصص في المحاسبة والمراجعة، نلتزم بالدقة والشفافية والسرية في خدمة عملائنا.
+                </p>
+            </div>
+
+            <div class="col-6 col-lg-2">
+                <h3 class="footer-heading h6">روابط سريعة</h3>
+                <ul class="footer-links">
+                    <li><a asp-controller="Home" asp-action="Index">الرئيسية</a></li>
+                    <li><a asp-controller="About" asp-action="Index">من نحن</a></li>
+                    <li><a asp-controller="Services" asp-action="Index">خدماتنا</a></li>
+                    <li><a asp-controller="Contact" asp-action="Index">تواصل معنا</a></li>
+                </ul>
+            </div>
+
+            <div class="col-6 col-lg-3">
+                <h3 class="footer-heading h6">خدماتنا</h3>
+                <ul class="footer-links">
+                    @foreach (var s in footerServices)
+                    {
+                        <li><a asp-controller="Services" asp-action="Index">@s.TitleAr</a></li>
+                    }
+                </ul>
+            </div>
+
+            <div class="col-lg-3">
+                <h3 class="footer-heading h6">تواصل معنا</h3>
+                <ul class="footer-contact">
+                    <li>
+                        <i class="bi bi-envelope-fill" aria-hidden="true"></i>
+                        <a href="mailto:@site.Email" dir="ltr">@site.Email</a>
+                    </li>
+                    <li>
+                        <i class="bi bi-telephone-fill" aria-hidden="true"></i>
+                        <a href="@phoneTel" dir="ltr">@site.Phone</a>
+                    </li>
+                    @if (site.HasWhatsApp)
+                    {
+                        <li>
+                            <i class="bi bi-whatsapp" aria-hidden="true"></i>
+                            <a href="https://wa.me/@site.WhatsAppInternational.TrimStart('+')" target="_blank" rel="noopener">واتساب</a>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+
+        <hr class="footer-divider" />
+        <div class="footer-bottom">
+            <span>&copy; @DateTime.Now.Year @site.BrandNameAr (@site.BrandNameEn). جميع الحقوق محفوظة.</span>
+        </div>
+    </div>
+</footer>

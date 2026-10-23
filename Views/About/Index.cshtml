@@ -1,0 +1,75 @@
+@{
+    var site = SiteOptions.Value;
+    ViewData["Title"] = "من نحن";
+    ViewData["MetaDescription"] = "تعرف على جوهر المراجعة (Core Audit)، مكتب المحاسبة والمراجعة الملتزم بالدقة والنزاهة والسرية في خدمة عملائه.";
+    var principles = ViewData["Principles"] as IReadOnlyList<CoreAudit.Models.PrincipleItem>
+        ?? new List<CoreAudit.Models.PrincipleItem>();
+}
+
+<section class="page-hero" aria-label="من نحن">
+    <div class="container">
+        <h1 class="page-hero-title">من نحن</h1>
+        <p class="page-hero-sub">تعرّف على @site.BrandNameAr ومبادئنا المهنية</p>
+    </div>
+</section>
+
+<section class="section" aria-label="نبذة عن المكتب">
+    <div class="container">
+        <div class="row align-items-center gy-4">
+            <div class="col-lg-6">
+                <span class="section-eyebrow">نبذة عنا</span>
+                <h2 class="section-title text-start">مكتب محاسبة ومراجعة مهني</h2>
+                <p class="about-text">
+                    @site.BrandNameAr (@site.BrandNameEn) مكتب متخصص في تقديم خدمات المحاسبة والمراجعة
+                    والاستشارات المالية. نعمل مع الشركات والمؤسسات لمساعدتها على تنظيم معلوماتها المالية،
+                    وتعزيز موثوقية تقاريرها، واتخاذ قرارات مبنية على معلومات واضحة.
+                </p>
+                <p class="about-text">
+                    نلتزم في عملنا بأعلى معايير النزاهة المهنية، ونضع سرية معلومات عملائنا وحمايتها في
+                    مقدمة أولوياتنا، مع حرص دائم على الدقة والوضوح في كل ما نقدمه.
+                </p>
+            </div>
+            <div class="col-lg-6">
+                <div class="about-graphic">
+                    <img src="@site.LogoPath" alt="شعار @site.BrandNameAr - @site.BrandNameEn" class="about-logo" />
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section section-alt" aria-label="التزامنا">
+    <div class="container">
+        <div class="commitment-box">
+            <i class="bi bi-award commitment-icon" aria-hidden="true"></i>
+            <h2 class="section-title">التزامنا</h2>
+            <p class="about-text text-center mx-auto" style="max-width: 760px;">
+                نلتزم بالدقة والنزاهة والسرية وتقديم خدمة مهنية عالية الجودة. هدفنا بناء علاقة ثقة
+                طويلة الأمد مع كل عميل من خلال عمل دقيق وتواصل واضح ومستمر.
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="section" aria-label="مبادئنا">
+    <div class="container">
+        <div class="section-head text-center">
+            <span class="section-eyebrow">قيمنا</span>
+            <h2 class="section-title">المبادئ التي توجهنا</h2>
+        </div>
+        <div class="row g-4">
+            @foreach (var p in principles)
+            {
+                <div class="col-md-6 col-lg-4">
+                    <div class="principle-card h-100">
+                        <div class="principle-icon" aria-hidden="true"><i class="bi @p.Icon"></i></div>
+                        <h3 class="h6 principle-title">@p.TitleAr</h3>
+                        <p class="principle-desc">@p.DescriptionAr</p>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+<partial name="_CtaSection" />

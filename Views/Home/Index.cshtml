@@ -1,0 +1,146 @@
+﻿@model CoreAudit.Models.HomeViewModel
+@{
+    var site = SiteOptions.Value;
+    ViewData["Title"] = "الرئيسية";
+    ViewData["MetaDescription"] = "جوهر المراجعة (Core Audit) شريكك الموثوق في المحاسبة والمراجعة والاستشارات المالية. خدمات مهنية مصممة لتلبية احتياجات أعمالك.";
+}
+
+<!-- Hero -->
+<section class="hero" aria-label="مقدمة">
+    <div class="container">
+        <div class="row align-items-center gy-5">
+            <div class="col-lg-6 hero-content">
+                <span class="hero-eyebrow">@site.BrandSubtitleAr</span>
+                <h1 class="hero-title">شريكك الموثوق في المحاسبة والمراجعة والاستشارات المالية</h1>
+                <p class="hero-lead">
+                    نساعد الشركات على تعزيز الدقة المالية، وتحسين وضوح التقارير، واتخاذ قرارات أكثر ثقة
+                    من خلال خدمات مهنية مصممة لتلبية احتياجات أعمالها.
+                </p>
+                <div class="hero-actions">
+                    <a class="btn btn-gold btn-lg" asp-controller="Contact" asp-action="Index">
+                        <i class="bi bi-chat-dots ms-1" aria-hidden="true"></i> اطلب استشارة
+                    </a>
+                    <a class="btn btn-outline-light btn-lg" asp-controller="Services" asp-action="Index">
+                        اكتشف خدماتنا <i class="bi bi-arrow-left ms-1" aria-hidden="true"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="hero-visual" aria-hidden="true">
+                    <div class="hero-card">
+                        <i class="bi bi-clipboard-check"></i>
+                        <span>مراجعة دقيقة</span>
+                    </div>
+                    <div class="hero-card">
+                        <i class="bi bi-graph-up-arrow"></i>
+                        <span>وضوح مالي</span>
+                    </div>
+                    <div class="hero-card">
+                        <i class="bi bi-shield-check"></i>
+                        <span>سرية وثقة</span>
+                    </div>
+                    <div class="hero-card">
+                        <i class="bi bi-file-earmark-bar-graph"></i>
+                        <span>تقارير منظمة</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Services -->
+<section class="section" id="services" aria-label="خدماتنا">
+    <div class="container">
+        <div class="section-head text-center">
+            <span class="section-eyebrow">ما نقدمه</span>
+            <h2 class="section-title">خدماتنا</h2>
+            <p class="section-subtitle">مجموعة متكاملة من الخدمات المهنية التي تدعم نمو أعمالك.</p>
+        </div>
+        <div class="row g-4">
+            @foreach (var service in Model.Services)
+            {
+                <div class="col-md-6 col-lg-4">
+                    <partial name="_ServiceCard" model="service" />
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+<!-- About teaser -->
+<section class="section section-alt" aria-label="من نحن">
+    <div class="container">
+        <div class="row align-items-center gy-4">
+            <div class="col-lg-6">
+                <div class="about-graphic">
+                    <img src="@site.LogoPath" alt="شعار @site.BrandNameAr - @site.BrandNameEn" class="about-logo" />
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <span class="section-eyebrow">من نحن</span>
+                <h2 class="section-title text-start">مكتب مهني تثق به في أموالك</h2>
+                <p class="about-text">
+                    في جوهر المراجعة (Core Audit) نقدم خدمات محاسبية ومراجعة واستشارات مالية مبنية على
+                    الدقة والنزاهة والسرية. نعمل مع عملائنا بروح الشراكة المهنية لمساعدتهم على فهم
+                    مركزهم المالي واتخاذ قرارات واثقة.
+                </p>
+                <ul class="about-points">
+                    <li><i class="bi bi-check-circle-fill" aria-hidden="true"></i> التزام بالدقة والاهتمام بالتفاصيل</li>
+                    <li><i class="bi bi-check-circle-fill" aria-hidden="true"></i> شفافية ووضوح في التقارير</li>
+                    <li><i class="bi bi-check-circle-fill" aria-hidden="true"></i> سرية تامة وحماية للمعلومات</li>
+                </ul>
+                <a class="btn btn-navy" asp-controller="About" asp-action="Index">المزيد عنا</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Why choose us -->
+<section class="section" aria-label="لماذا تختارنا">
+    <div class="container">
+        <div class="section-head text-center">
+            <span class="section-eyebrow">مبادئنا</span>
+            <h2 class="section-title">لماذا تختارنا</h2>
+            <p class="section-subtitle">القيم المهنية التي توجه عملنا مع كل عميل.</p>
+        </div>
+        <div class="row g-4">
+            @foreach (var p in Model.Principles)
+            {
+                <div class="col-md-6 col-lg-4">
+                    <div class="principle-card h-100">
+                        <div class="principle-icon" aria-hidden="true"><i class="bi @p.Icon"></i></div>
+                        <h3 class="h6 principle-title">@p.TitleAr</h3>
+                        <p class="principle-desc">@p.DescriptionAr</p>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+<!-- Process -->
+<section class="section section-navy" aria-label="آلية عملنا">
+    <div class="container">
+        <div class="section-head text-center">
+            <span class="section-eyebrow light">كيف نعمل</span>
+            <h2 class="section-title text-white">آلية عملنا</h2>
+            <p class="section-subtitle light">رحلة واضحة من فهم احتياجاتك حتى عرض النتائج.</p>
+        </div>
+        <div class="row g-4 process-row">
+            @foreach (var step in Model.ProcessSteps)
+            {
+                <div class="col-md-6 col-lg-3">
+                    <div class="process-card h-100">
+                        <div class="process-number">@step.Number</div>
+                        <div class="process-icon" aria-hidden="true"><i class="bi @step.Icon"></i></div>
+                        <h3 class="h6 process-title">@step.TitleAr</h3>
+                        <p class="process-desc">@step.DescriptionAr</p>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+<partial name="_CtaSection" />

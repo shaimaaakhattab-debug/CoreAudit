@@ -1,0 +1,154 @@
+@model CoreAudit.Models.ContactFormModel
+@{
+    var site = SiteOptions.Value;
+    ViewData["Title"] = "تواصل معنا";
+    ViewData["MetaDescription"] = "تواصل مع جوهر المراجعة (Core Audit) عبر البريد الإلكتروني أو الهاتف، أو أرسل لنا رسالة من خلال نموذج التواصل.";
+    var services = ViewData["Services"] as IReadOnlyList<CoreAudit.Models.ServiceItem>
+        ?? new List<CoreAudit.Models.ServiceItem>();
+    var submitted = TempData["ContactSubmitted"] as bool? ?? false;
+    var phoneTel = "tel:" + site.Phone;
+}
+
+<section class="page-hero" aria-label="تواصل معنا">
+    <div class="container">
+        <h1 class="page-hero-title">تواصل معنا</h1>
+        <p class="page-hero-sub">يسعدنا تواصلك معنا لمناقشة احتياجاتك المهنية</p>
+    </div>
+</section>
+
+<section class="section" aria-label="بيانات ونموذج التواصل">
+    <div class="container">
+        <div class="row gy-4">
+            <!-- Contact details -->
+            <div class="col-lg-5">
+                <div class="contact-info">
+                    <h2 class="h4 mb-4">بيانات التواصل</h2>
+
+                    <div class="contact-item">
+                        <div class="contact-item-icon" aria-hidden="true"><i class="bi bi-envelope-fill"></i></div>
+                        <div>
+                            <span class="contact-item-label">البريد الإلكتروني</span>
+                            <a class="contact-item-value" href="mailto:@site.Email" dir="ltr">@site.Email</a>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <div class="contact-item-icon" aria-hidden="true"><i class="bi bi-telephone-fill"></i></div>
+                        <div>
+                            <span class="contact-item-label">الهاتف</span>
+                            <a class="contact-item-value" href="@phoneTel" dir="ltr">@site.Phone</a>
+                        </div>
+                    </div>
+
+                    @if (site.HasWhatsApp)
+                    {
+                        <div class="contact-item">
+                            <div class="contact-item-icon" aria-hidden="true"><i class="bi bi-whatsapp"></i></div>
+                            <div>
+                                <span class="contact-item-label">واتساب</span>
+                                <a class="contact-item-value" href="https://wa.me/@site.WhatsAppInternational.TrimStart('+')" target="_blank" rel="noopener" dir="ltr">تواصل عبر واتساب</a>
+                            </div>
+                        </div>
+                    }
+
+                    <p class="contact-note">
+                        <i class="bi bi-info-circle" aria-hidden="true"></i>
+                        نحرص على الرد على استفساراتكم في أقرب وقت ممكن خلال أوقات العمل.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Contact form -->
+            <div class="col-lg-7">
+                <div class="contact-form-wrap">
+                    <h2 class="h4 mb-4">أرسل لنا رسالة</h2>
+
+                    @if (submitted)
+                    {
+                        <div class="alert alert-success" role="alert">
+                            <i class="bi bi-check-circle-fill ms-1" aria-hidden="true"></i>
+                            تم إرسال رسالتك بنجاح. شكرًا لتواصلك معنا، وسنعاود الرد عليك في أقرب وقت ممكن.
+                        </div>
+                    }
+
+                    @{
+                        var modelErrors = ViewData.ModelState[string.Empty]?.Errors;
+                    }
+                    @if (modelErrors != null && modelErrors.Count > 0)
+                    {
+                        <div class="alert alert-danger" role="alert">
+                            <i class="bi bi-exclamation-triangle-fill ms-1" aria-hidden="true"></i>
+                            @foreach (var err in modelErrors)
+                            {
+                                <div>@err.ErrorMessage</div>
+                            }
+                        </div>
+                    }
+                    else if (!ViewData.ModelState.IsValid)
+                    {
+                        <div class="alert alert-danger" role="alert">
+                            <i class="bi bi-exclamation-triangle-fill ms-1" aria-hidden="true"></i>
+                            يرجى تصحيح الأخطاء الموضحة أدناه ثم إعادة الإرسال.
+                        </div>
+                    }
+
+                    <form asp-controller="Contact" asp-action="Index" method="post" novalidate>
+                        @Html.AntiForgeryToken()
+
+                        @* Honeypot anti-spam field: hidden from users, left empty by humans. *@
+                        <div class="hp-field" aria-hidden="true">
+                            <label asp-for="Website">لا تملأ هذا الحقل</label>
+                            <input asp-for="Website" type="text" tabindex="-1" autocomplete="off" />
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Name" class="form-label">الاسم</label>
+                            <input asp-for="Name" class="form-control" autocomplete="name" aria-required="true" />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="Email" class="form-label">البريد الإلكتروني</label>
+                                <input asp-for="Email" class="form-control" type="email" dir="ltr" autocomplete="email" aria-required="true" />
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="Phone" class="form-label">رقم الهاتف (اختياري)</label>
+                                <input asp-for="Phone" class="form-control" type="tel" dir="ltr" autocomplete="tel" />
+                                <span asp-validation-for="Phone" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Service" class="form-label">الخدمة المطلوبة</label>
+                            <select asp-for="Service" class="form-select" aria-required="true">
+                                <option value="">— اختر الخدمة —</option>
+                                @foreach (var s in services)
+                                {
+                                    <option value="@s.TitleAr">@s.TitleAr</option>
+                                }
+                                <option value="أخرى">أخرى</option>
+                            </select>
+                            <span asp-validation-for="Service" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Message" class="form-label">الرسالة</label>
+                            <textarea asp-for="Message" class="form-control" rows="5" aria-required="true"></textarea>
+                            <span asp-validation-for="Message" class="text-danger"></span>
+                        </div>
+
+                        <button type="submit" class="btn btn-gold btn-lg">
+                            <i class="bi bi-send ms-1" aria-hidden="true"></i> إرسال الرسالة
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
