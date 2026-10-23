@@ -196,7 +196,7 @@ a:hover { color: var(--gold-500); }
 }
 .process-card:hover { background: rgba(255,255,255,.1); transform: translateY(-6px); }
 .process-number {
-    position: absolute; top: -18px; inset-inline-start: 50%; transform: translateX(50%);
+    position: absolute; top: -18px; left: 50%; transform: translateX(-50%);
     width: 44px; height: 44px; border-radius: 50%; background: var(--gold-500); color: var(--navy-900);
     font-weight: 800; display: grid; place-items: center; box-shadow: var(--shadow-sm);
 }
@@ -278,7 +278,19 @@ a:hover { color: var(--gold-500); }
 
 /* ---------- Responsive ---------- */
 @media (max-width: 991.98px) {
-    .navbar-nav { text-align: center; padding: 1rem 0; }
+    /* Mobile hamburger menu: give the dropdown a solid surface so links are
+       readable and tappable over page content, and keep it above the hero. */
+    .navbar-collapse {
+        background: var(--white);
+        border-radius: var(--radius);
+        margin-top: .75rem;
+        padding: .5rem 1rem 1rem;
+        box-shadow: var(--shadow-md);
+    }
+    .navbar-nav { text-align: center; padding: .5rem 0; }
+    .navbar-nav .nav-link { margin: 0; padding: .75rem .5rem; }
+    /* Underline animation is awkward when stacked; keep a simple active colour. */
+    .navbar-nav .nav-link::after { display: none; }
     .btn-cta { display: inline-block; margin-top: .5rem; }
     .hero { padding: 3.5rem 0; }
     .section-title.text-start { text-align: center !important; }
@@ -288,4 +300,7 @@ a:hover { color: var(--gold-500); }
     .hero-card { padding: 1.2rem .8rem; }
     .brand-logo { height: 44px; }
     .hero-actions .btn { width: 100%; }
+    /* Comfortable edge spacing and no overflow on the smallest phones. */
+    .section { padding: 3rem 0; }
+    .contact-info, .contact-form-wrap { padding: 1.5rem; }
 }
