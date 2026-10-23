@@ -8,12 +8,18 @@ public class ContactController : Controller
 {
     private readonly IContentService _content;
     private readonly IEmailSender _emailSender;
+    private readonly IContactMessageStore _messageStore;
     private readonly ILogger<ContactController> _logger;
 
-    public ContactController(IContentService content, IEmailSender emailSender, ILogger<ContactController> logger)
+    public ContactController(
+        IContentService content,
+        IEmailSender emailSender,
+        IContactMessageStore messageStore,
+        ILogger<ContactController> logger)
     {
         _content = content;
         _emailSender = emailSender;
+        _messageStore = messageStore;
         _logger = logger;
     }
 
@@ -46,19 +52,22 @@ public class ContactController : Controller
             return View(model);
         }
 
-        // Attempt delivery. Email is tried first; if SMTP is unavailable the
-        // submission is stored locally so the enquiry is never lost.
+        // Attempt delivery via the configured email provider.
         var result = await _emailSender.SendContactMessageAsync(model, cancellationToken);
 
-        if (result == ContactDeliveryResult.Failed)
+        if (result != ContactDeliveryResult.Sent)
         {
+            // Delivery did NOT succeed. Save a local backstop copy so the enquiry
+            // is not lost entirely, but DO NOT report success to the visitor.
+            _messageStore.TrySave(model);
+
             // No internal exception details or secrets are surfaced to the user.
             ModelState.AddModelError(string.Empty,
                 "تعذر إرسال رسالتك في الوقت الحالي. يرجى المحاولة لاحقًا أو التواصل معنا عبر البريد الإلكتروني أو الهاتف.");
             return View(model);
         }
 
-        // Sent OR SavedLocally -> the enquiry was captured; show a genuine success.
+        // The provider accepted the message -> genuine success.
         TempData["ContactSubmitted"] = true;
         return RedirectToAction(nameof(Index));
     }

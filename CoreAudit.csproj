@@ -11,4 +11,12 @@
     <PackageReference Include="MailKit" Version="4.18.2" />
   </ItemGroup>
 
+  <!-- The test project lives under CoreAudit.Tests/. Keep its sources out of the
+       web app's compilation and out of content/publish so it is never deployed. -->
+  <ItemGroup>
+    <Compile Remove="CoreAudit.Tests/**/*.cs" />
+    <Content Remove="CoreAudit.Tests/**/*" />
+    <None Remove="CoreAudit.Tests/**/*" />
+  </ItemGroup>
+
 </Project>
