@@ -2,7 +2,7 @@
 @{
     var site = SiteOptions.Value;
     ViewData["Title"] = "تواصل معنا";
-    ViewData["MetaDescription"] = "تواصل مع جوهر المراجعة (Core Audit) عبر البريد الإلكتروني أو الهاتف، أو أرسل لنا رسالة من خلال نموذج التواصل.";
+    ViewData["MetaDescription"] = "تواصل مع شركة كور أوديت (Core Audit) عبر البريد الإلكتروني أو الهاتف، أو أرسل لنا رسالة من خلال نموذج التواصل.";
     var services = ViewData["Services"] as IReadOnlyList<CoreAudit.Models.ServiceItem>
         ?? new List<CoreAudit.Models.ServiceItem>();
     var submitted = TempData["ContactSubmitted"] as bool? ?? false;
@@ -55,6 +55,31 @@
                         <i class="bi bi-info-circle" aria-hidden="true"></i>
                         نحرص على الرد على استفساراتكم في أقرب وقت ممكن خلال أوقات العمل.
                     </p>
+
+                    @if (site.HasSocial)
+                    {
+                        <div class="contact-social">
+                            <span class="contact-item-label">تابعنا على</span>
+                            <ul class="social-links social-links-light" aria-label="حسابات التواصل الاجتماعي">
+                                @if (!string.IsNullOrWhiteSpace(site.YouTubeUrl))
+                                {
+                                    <li><a href="@site.YouTubeUrl" target="_blank" rel="noopener noreferrer" aria-label="تابعنا على يوتيوب" title="يوتيوب"><i class="bi bi-youtube" aria-hidden="true"></i></a></li>
+                                }
+                                @if (!string.IsNullOrWhiteSpace(site.TwitterUrl))
+                                {
+                                    <li><a href="@site.TwitterUrl" target="_blank" rel="noopener noreferrer" aria-label="تابعنا على منصة إكس" title="إكس (تويتر)"><i class="bi bi-twitter-x" aria-hidden="true"></i></a></li>
+                                }
+                                @if (!string.IsNullOrWhiteSpace(site.InstagramUrl))
+                                {
+                                    <li><a href="@site.InstagramUrl" target="_blank" rel="noopener noreferrer" aria-label="تابعنا على إنستجرام" title="إنستجرام"><i class="bi bi-instagram" aria-hidden="true"></i></a></li>
+                                }
+                                @if (!string.IsNullOrWhiteSpace(site.TikTokUrl))
+                                {
+                                    <li><a href="@site.TikTokUrl" target="_blank" rel="noopener noreferrer" aria-label="تابعنا على تيك توك" title="تيك توك"><i class="bi bi-tiktok" aria-hidden="true"></i></a></li>
+                                }
+                            </ul>
+                        </div>
+                    }
                 </div>
             </div>
 

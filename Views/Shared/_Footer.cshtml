@@ -15,6 +15,27 @@
                 <p class="footer-desc">
                     مكتب مهني متخصص في المحاسبة والمراجعة، نلتزم بالدقة والشفافية والسرية في خدمة عملائنا.
                 </p>
+                @if (site.HasSocial)
+                {
+                    <ul class="social-links" aria-label="حسابات التواصل الاجتماعي">
+                        @if (!string.IsNullOrWhiteSpace(site.YouTubeUrl))
+                        {
+                            <li><a href="@site.YouTubeUrl" target="_blank" rel="noopener noreferrer" aria-label="تابعنا على يوتيوب" title="يوتيوب"><i class="bi bi-youtube" aria-hidden="true"></i></a></li>
+                        }
+                        @if (!string.IsNullOrWhiteSpace(site.TwitterUrl))
+                        {
+                            <li><a href="@site.TwitterUrl" target="_blank" rel="noopener noreferrer" aria-label="تابعنا على منصة إكس" title="إكس (تويتر)"><i class="bi bi-twitter-x" aria-hidden="true"></i></a></li>
+                        }
+                        @if (!string.IsNullOrWhiteSpace(site.InstagramUrl))
+                        {
+                            <li><a href="@site.InstagramUrl" target="_blank" rel="noopener noreferrer" aria-label="تابعنا على إنستجرام" title="إنستجرام"><i class="bi bi-instagram" aria-hidden="true"></i></a></li>
+                        }
+                        @if (!string.IsNullOrWhiteSpace(site.TikTokUrl))
+                        {
+                            <li><a href="@site.TikTokUrl" target="_blank" rel="noopener noreferrer" aria-label="تابعنا على تيك توك" title="تيك توك"><i class="bi bi-tiktok" aria-hidden="true"></i></a></li>
+                        }
+                    </ul>
+                }
             </div>
 
             <div class="col-6 col-lg-2">
@@ -23,6 +44,7 @@
                     <li><a asp-controller="Home" asp-action="Index">الرئيسية</a></li>
                     <li><a asp-controller="About" asp-action="Index">من نحن</a></li>
                     <li><a asp-controller="Services" asp-action="Index">خدماتنا</a></li>
+                    <li><a asp-controller="CrownPrince" asp-action="Index">ولي العهد</a></li>
                     <li><a asp-controller="Contact" asp-action="Index">تواصل معنا</a></li>
                 </ul>
             </div>

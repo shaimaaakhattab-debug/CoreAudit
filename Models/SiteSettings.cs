@@ -9,7 +9,7 @@ public class SiteSettings
 {
     public string BrandNameEn { get; set; } = "CORE AUDIT";
     public string BrandSubtitleEn { get; set; } = "ACCOUNTANTS AND AUDITORS";
-    public string BrandNameAr { get; set; } = "جوهر المراجعة";
+    public string BrandNameAr { get; set; } = "شركة كور أوديت";
     public string BrandSubtitleAr { get; set; } = "محاسبون ومراجعون قانونيون";
 
     public string Domain { get; set; } = "coreauditcpa.com";
@@ -34,4 +34,17 @@ public class SiteSettings
 
     /// <summary>Convenience flag: only show WhatsApp once a verified number exists.</summary>
     public bool HasWhatsApp => !string.IsNullOrWhiteSpace(WhatsAppInternational);
+
+    // ----- Official social media accounts (public URLs; not secrets) -----
+    public string YouTubeUrl { get; set; } = "";
+    public string TwitterUrl { get; set; } = "";
+    public string InstagramUrl { get; set; } = "";
+    public string TikTokUrl { get; set; } = "";
+
+    /// <summary>True when at least one social link is configured.</summary>
+    public bool HasSocial =>
+        !string.IsNullOrWhiteSpace(YouTubeUrl) ||
+        !string.IsNullOrWhiteSpace(TwitterUrl) ||
+        !string.IsNullOrWhiteSpace(InstagramUrl) ||
+        !string.IsNullOrWhiteSpace(TikTokUrl);
 }

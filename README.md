@@ -1,6 +1,6 @@
-# Core Audit (جوهر المراجعة) — Corporate Website
+# Core Audit (شركة كور أوديت) — Corporate Website
 
-A premium, Arabic-first (RTL) corporate website for **CORE AUDIT — Accountants and Auditors / جوهر المراجعة — محاسبون ومراجعون قانونيون**, built with ASP.NET Core MVC.
+A premium, Arabic-first (RTL) corporate website for **CORE AUDIT — Accountants and Auditors / شركة كور أوديت — محاسبون ومراجعون قانونيون**, built with ASP.NET Core MVC.
 
 The site presents the firm's services, principles, process, and contact details with a professional navy + gold visual identity derived from the official logo.
 

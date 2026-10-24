@@ -1,0 +1,48 @@
+@{
+    var site = SiteOptions.Value;
+    ViewData["Title"] = "ولي العهد الأمير محمد بن سلمان";
+    ViewData["MetaDescription"] = "صفحة تكريم لصاحب السمو الملكي ولي العهد الأمير محمد بن سلمان بن عبدالعزيز آل سعود ورؤيته لمستقبل المملكة العربية السعودية.";
+}
+
+<section class="page-hero" aria-label="ولي العهد">
+    <div class="container">
+        <h1 class="page-hero-title">ولي العهد الأمير محمد بن سلمان</h1>
+        <p class="page-hero-sub">رؤية وطن نحو الريادة والازدهار</p>
+    </div>
+</section>
+
+<nav class="breadcrumb-bar" aria-label="مسار التنقل">
+    <div class="container">
+        <ol class="breadcrumb-list">
+            <li><a asp-controller="Home" asp-action="Index">الرئيسية</a></li>
+            <li aria-current="page">ولي العهد</li>
+        </ol>
+    </div>
+</nav>
+
+<section class="section leadership-section" aria-label="كلمة ولي العهد">
+    <div class="container">
+        <div class="row align-items-center gy-4 gy-lg-0">
+            <div class="col-lg-5">
+                <div class="leader-portrait-wrap">
+                    <img src="~/images/crown-prince-mohammed-bin-salman.jpg"
+                         alt="صاحب السمو الملكي ولي العهد الأمير محمد بن سلمان بن عبدالعزيز آل سعود"
+                         class="leader-portrait" loading="lazy" />
+                </div>
+            </div>
+            <div class="col-lg-7">
+                <div class="leader-quote-wrap">
+                    <span class="leader-eyebrow">رؤية وطن</span>
+                    <h2 class="leader-heading">سيدي ولي العهد الأمير محمد بن سلمان - حفظه الله</h2>
+                    <blockquote class="leader-quote">
+                        <i class="bi bi-quote leader-quote-mark" aria-hidden="true"></i>
+                        <p>طموحنا أن نبني وطناً أكثر ازدهاراً، يجد فيه كل مواطن ما يتمناه، مستقبل وطننا الذي نبنيه معاً، لن نقبل إلا أن نجعله في مقدمة دول العالم.</p>
+                    </blockquote>
+                    <a class="btn btn-navy mt-3" asp-controller="Home" asp-action="Index">
+                        <i class="bi bi-arrow-right ms-1" aria-hidden="true"></i> العودة إلى الصفحة الرئيسية
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

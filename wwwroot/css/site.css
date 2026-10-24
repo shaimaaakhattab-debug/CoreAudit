@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Core Audit (جوهر المراجعة) — site styles
+   Core Audit (شركة كور أوديت) — site styles
    Palette derived from the official logo: deep navy + gold on light neutral.
    RTL-first, Arabic typography (Cairo / Tajawal).
    ========================================================================== */
@@ -176,6 +176,42 @@ a:hover { color: var(--gold-500); }
 .commitment-box { text-align: center; }
 .commitment-icon { font-size: 3rem; color: var(--gold-500); display: block; margin-bottom: 1rem; }
 
+/* ---------- Leadership quote (HRH Crown Prince) ---------- */
+.leadership-section { background: var(--cream-100); }
+.leader-portrait-wrap {
+    border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow-md);
+    border: 1px solid #ece7dd; background: #fff;
+    /* Gold accent frame */
+    position: relative; padding: 10px;
+}
+.leader-portrait-wrap::after {
+    content: ''; position: absolute; inset: 0; border-radius: var(--radius);
+    border: 2px solid rgba(184,145,80,.35); pointer-events: none;
+}
+.leader-portrait {
+    display: block; width: 100%; height: auto; max-width: 100%;
+    border-radius: calc(var(--radius) - 4px); object-fit: cover;
+}
+.leader-quote-wrap { padding-inline-start: 1rem; }
+.leader-eyebrow {
+    display: inline-block; color: var(--gold-500); font-weight: 700; letter-spacing: 1px;
+    text-transform: uppercase; font-size: .85rem; margin-bottom: .6rem;
+}
+.leader-heading {
+    font-size: clamp(1.4rem, 2.6vw, 2rem); color: var(--navy-800);
+    line-height: 1.6; margin-bottom: 1.2rem;
+}
+.leader-quote { position: relative; margin: 0; padding: 0; }
+.leader-quote-mark {
+    color: var(--gold-400); font-size: 2.6rem; line-height: 1;
+    display: block; margin-bottom: .4rem;
+}
+.leader-quote p {
+    font-family: 'Cairo', 'Tajawal', sans-serif; font-size: 1.2rem; line-height: 2.1;
+    color: var(--navy-900); margin: 0; font-weight: 500;
+    border-inline-start: 3px solid var(--gold-500); padding-inline-start: 1.2rem;
+}
+
 /* ---------- Principles ---------- */
 .principle-card {
     background: #fff; border-radius: var(--radius); padding: 1.8rem; box-shadow: var(--shadow-sm);
@@ -221,6 +257,20 @@ a:hover { color: var(--gold-500); }
 .page-hero-title { color: #fff; font-size: clamp(1.8rem, 3.5vw, 2.6rem); margin-bottom: .5rem; }
 .page-hero-sub { color: rgba(255,255,255,.8); font-size: 1.1rem; margin: 0; }
 
+/* ---------- Breadcrumb ---------- */
+.breadcrumb-bar { background: var(--cream-100); border-bottom: 1px solid #ece7dd; }
+.breadcrumb-list {
+    list-style: none; display: flex; flex-wrap: wrap; gap: .5rem; align-items: center;
+    margin: 0; padding: .9rem 0; font-size: .95rem;
+}
+.breadcrumb-list li { display: flex; align-items: center; color: var(--muted); }
+.breadcrumb-list li + li::before {
+    content: '‹'; color: var(--gold-500); margin: 0 .55rem; font-weight: 700;
+}
+.breadcrumb-list a { color: var(--navy-700); font-weight: 600; }
+.breadcrumb-list a:hover { color: var(--gold-500); }
+.breadcrumb-list li[aria-current="page"] { color: var(--navy-800); font-weight: 600; }
+
 /* ---------- Contact ---------- */
 .contact-info {
     background: var(--navy-800); color: #fff; border-radius: var(--radius); padding: 2.2rem; height: 100%;
@@ -244,8 +294,19 @@ a:hover { color: var(--gold-500); }
 }
 .form-label { font-weight: 600; color: var(--navy-800); }
 .form-control, .form-select { border-radius: 10px; padding: .7rem .9rem; border: 1px solid #d8dbe0; }
-/* Honeypot anti-spam field — hidden from humans, still submitted by bots */
-.hp-field { position: absolute; left: -9999px; top: auto; width: 1px; height: 1px; overflow: hidden; }
+/* Honeypot anti-spam field — hidden from humans, still submitted by bots.
+   Uses the clip() visually-hidden pattern (no negative offset) so it creates no
+   horizontal overflow. A left:-9999px offset breaks RTL layout: in dir="rtl" it
+   pushes the page content into a narrow right-hand column with blank space left. */
+.hp-field {
+    position: absolute;
+    width: 1px; height: 1px;
+    padding: 0; margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
 .form-control:focus, .form-select:focus { border-color: var(--gold-400); box-shadow: 0 0 0 .2rem rgba(184,145,80,.2); }
 
 /* ---------- Footer ---------- */
@@ -265,6 +326,26 @@ a:hover { color: var(--gold-500); }
 .footer-contact a:hover { color: var(--gold-300); }
 .footer-divider { border-color: rgba(255,255,255,.12); margin: 2rem 0 1rem; }
 .footer-bottom { text-align: center; font-size: .9rem; color: rgba(255,255,255,.55); }
+
+/* ---------- Social media icons ---------- */
+.social-links { list-style: none; display: flex; flex-wrap: wrap; gap: .6rem; padding: 0; margin: 1.2rem 0 0; }
+.social-links li { margin: 0; }
+.social-links a {
+    width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center;
+    background: rgba(255,255,255,.08); color: rgba(255,255,255,.85); font-size: 1.15rem;
+    border: 1px solid rgba(201,168,106,.35); transition: all var(--transition);
+}
+.social-links a:hover {
+    background: var(--gold-500); color: var(--navy-900); border-color: var(--gold-500);
+    transform: translateY(-2px);
+}
+.social-links a:focus-visible { outline: 2px solid var(--gold-300); outline-offset: 2px; }
+
+/* Light variant for use on the dark navy contact-info card */
+.contact-social { margin-top: 1.25rem; }
+.contact-social .contact-item-label { display: block; margin-bottom: .2rem; }
+.social-links-light a { background: rgba(201,168,106,.18); color: var(--gold-300); }
+.social-links-light a:hover { background: var(--gold-400); color: var(--navy-900); }
 
 /* ---------- Back to top ---------- */
 .back-to-top {
@@ -294,6 +375,11 @@ a:hover { color: var(--gold-500); }
     .btn-cta { display: inline-block; margin-top: .5rem; }
     .hero { padding: 3.5rem 0; }
     .section-title.text-start { text-align: center !important; }
+    /* Leadership quote: stack portrait above quote, cap portrait width, center it. */
+    .leader-portrait-wrap { max-width: 420px; margin-inline: auto; }
+    .leader-quote-wrap { padding-inline-start: 0; margin-top: 1.5rem; text-align: center; }
+    .leader-quote p { border-inline-start: 0; padding-inline-start: 0; }
+    .leader-quote-mark { margin-inline: auto; }
 }
 @media (max-width: 575.98px) {
     .hero-visual { grid-template-columns: 1fr 1fr; gap: .8rem; }
