@@ -20,18 +20,18 @@ builder.Services.AddSingleton<IContentService, ContentService>();
 // Local backstop store for submissions that could not be delivered.
 builder.Services.AddSingleton<IContactMessageStore, FileContactMessageStore>();
 
-// Choose the email delivery provider. Default is "Resend" (HTTPS API) because the
-// production host blocks outbound SMTP. Set EmailSettings:Provider to "Smtp" to use
-// direct SMTP (e.g. local development).
-var emailProvider = builder.Configuration["EmailSettings:Provider"] ?? "Resend";
-if (string.Equals(emailProvider, "Smtp", StringComparison.OrdinalIgnoreCase))
-{
-    builder.Services.AddTransient<IEmailSender, SmtpEmailSender>();
-}
-else
+// Choose the email delivery provider. Default is "Smtp" (Namecheap Private Email,
+// mail.privateemail.com:465). Set EmailSettings:Provider to "Resend" to use the HTTPS
+// API instead (e.g. if the host blocks outbound SMTP).
+var emailProvider = builder.Configuration["EmailSettings:Provider"] ?? "Smtp";
+if (string.Equals(emailProvider, "Resend", StringComparison.OrdinalIgnoreCase))
 {
     builder.Services.AddHttpClient(ResendEmailSender.HttpClientName);
     builder.Services.AddTransient<IEmailSender, ResendEmailSender>();
+}
+else
+{
+    builder.Services.AddTransient<IEmailSender, SmtpEmailSender>();
 }
 
 var app = builder.Build();

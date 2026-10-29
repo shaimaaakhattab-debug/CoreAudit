@@ -18,7 +18,7 @@ The site presents the firm's services, principles, process, and contact details 
 | Icons | Bootstrap Icons (CDN) |
 | Fonts | Cairo + Tajawal (Google Fonts, Arabic-friendly) |
 | JS | Vanilla `wwwroot/js/site.js` + Bootstrap bundle — **no Angular/React** |
-| Email | Gmail SMTP via **MailKit** (contact form) |
+| Email | Namecheap Private Email SMTP (port 465, SSL/TLS) via **MailKit** (contact form) |
 | Data | **None** — no database in this phase |
 
 No paid services, no external accounts, no secrets committed.
@@ -119,7 +119,7 @@ All brand and contact details live in **one place**: the `SiteSettings` section 
 
 ```json
 "SiteSettings": {
-  "Email": "coreauditcpa@gmail.com",
+  "Email": "info@coreauditcpa.com",
   "Phone": "0567334550",
   "WhatsAppInternational": ""
 }
@@ -137,8 +137,8 @@ No views need editing when contact details change.
 
 ## 7. Contact form & email delivery
 
-The contact form sends each submission by email to **coreauditcpa@gmail.com** using
-Gmail SMTP via the [MailKit](https://github.com/jstedfast/MailKit) library.
+The contact form emails each submission to **info@coreauditcpa.com** through
+**Namecheap Private Email** SMTP, using the [MailKit](https://github.com/jstedfast/MailKit) library.
 
 ### How it works
 
@@ -148,124 +148,106 @@ Gmail SMTP via the [MailKit](https://github.com/jstedfast/MailKit) library.
 - **Anti-spam honeypot:** a hidden `Website` field; if a bot fills it, the submission
   is silently accepted without sending. Field lengths are capped (name ≤ 100,
   phone ≤ 30, message ≤ 2000).
-- **Async sending** through `IEmailSender` / `SmtpEmailSender` (registered in DI).
-  The sender tries port **587 (STARTTLS)** first and automatically falls back to
-  **465 (SSL)**, so it works on whichever port the network/host allows.
-- **Local fallback (never lose an enquiry):** if SMTP cannot be reached at all
-  (e.g. the network blocks outbound mail), the submission is saved as a UTF-8 text
-  file under `App_Data/contact-messages/` — a folder **outside `wwwroot`** (not
-  web-accessible) and **git-ignored** (it holds customer PII). The visitor still
-  sees a genuine success message, and the firm can read the saved enquiries. As
-  soon as SMTP is reachable, delivery reverts to email automatically with no code
-  change. Delivery outcome is `Sent`, `SavedLocally`, or `Failed` (only `Failed`
-  shows the error).
+- **Async sending** through `IEmailSender`. `EmailSettings:Provider` selects the
+  implementation: **`Smtp`** (default, `SmtpEmailSender`) or `Resend`
+  (`ResendEmailSender`, HTTPS API — use it only if the host blocks outbound SMTP).
+- **SMTP transport:** `mail.privateemail.com`, port **465**, **implicit SSL/TLS**
+  (TLS starts on connect). One attempt on the configured port — there is no silent
+  fallback to another port.
+- **Honest outcome:** the Arabic **success** message is shown **only** after the SMTP
+  server has accepted the message. If sending fails (or the password is not
+  configured), the visitor sees the generic Arabic **error** message — no exception
+  details or secrets are exposed.
+- **Backstop copy:** when sending fails, the submission is also written as a UTF-8
+  text file under `App_Data/contact-messages/` (outside `wwwroot`, git-ignored, holds
+  customer PII). This is a best-effort safety net, **not** a success path and not
+  durable storage.
 - The visitor's email is used **only as `Reply-To`** (after validation). The `From`
-  address is always the authenticated Gmail account — never the visitor's address.
-- The Arabic **success** message is shown only after the submission is captured
-  (either emailed or saved locally).
-  If sending fails, a generic Arabic **error** message is shown — no exception details
-  or secrets are ever exposed.
-- **Privacy:** passwords are never logged, and the submitted field values
+  address is always the authenticated company mailbox — never the visitor's address.
+- **Privacy:** passwords are never logged, and submitted field values
   (name, email, phone, message) are **not written to logs**.
 
-### Gmail SMTP configuration
+### SMTP configuration
 
 Non-secret settings live in `appsettings.json` under `EmailSettings`:
 
 ```jsonc
 "EmailSettings": {
-  "Host": "smtp.gmail.com",
-  "Port": 587,
-  "UseStartTls": true,
+  "Provider": "Smtp",
+  "Host": "mail.privateemail.com",
+  "Port": 465,
+  "UseStartTls": false,
+  "Username": "info@coreauditcpa.com",
   "FromName": "Core Audit Website",
-  "FromAddress": "coreauditcpa@gmail.com",
-  "ToAddress": "coreauditcpa@gmail.com"
-  // Username and Password are SECRETS — do NOT put them here.
+  "FromAddress": "info@coreauditcpa.com",   // must equal Username
+  "ToAddress": "info@coreauditcpa.com"      // recipient — change here to redirect enquiries
+  // Password is a SECRET — do NOT put it here.
 }
 ```
 
-The two **secrets** come from User Secrets (local dev) or environment variables
-(production) and are **never committed**:
+The only **secret** is the mailbox password, key `EmailSettings:Password`. It is
+supplied from User Secrets (local dev) or server-side configuration (production) and
+is **never committed**. It is never sent to the browser: the configuration is read
+only on the server.
 
-| Key | Value |
-|-----|-------|
-| `EmailSettings:Username` | the Gmail account, e.g. `coreauditcpa@gmail.com` |
-| `EmailSettings:Password` | a Gmail **App Password** (16 characters) |
+### Configure the password with .NET User Secrets (local dev)
 
-> **Gmail App Password** (required — a normal account password will not work):
-> 1. Enable **2-Step Verification** on the Gmail account.
-> 2. Go to Google Account → **Security** → **App passwords**.
-> 3. Generate a password for "Mail" and copy the 16-character value.
-> Use that value for `EmailSettings:Password`.
-
-### Configure secrets with .NET User Secrets (local dev)
-
-Run from the project folder (`d:\proj\CoreAudit`). The `UserSecretsId` is already
-set in `CoreAudit.csproj`:
+Run from the project folder. The `UserSecretsId` is already set in `CoreAudit.csproj`:
 
 ```powershell
-dotnet user-secrets init
-dotnet user-secrets set "EmailSettings:Username" "coreauditcpa@gmail.com"
-dotnet user-secrets set "EmailSettings:Password" "YOUR_16_CHAR_APP_PASSWORD"
-```
-
-Verify the keys are stored (does not reveal values to source control):
-
-```powershell
+dotnet user-secrets set "EmailSettings:Password" "THE_MAILBOX_PASSWORD"
 dotnet user-secrets list
 ```
 
 Secrets are stored in your Windows user profile
 (`%APPDATA%\Microsoft\UserSecrets\<UserSecretsId>\secrets.json`), **outside** the
-project, so they are never committed.
+project, so they are never committed. Restart the app after changing them.
 
-For **production**, set the same keys as environment variables instead, e.g.:
+### Production (SmarterASP.NET)
 
-```powershell
-setx EmailSettings__Username "coreauditcpa@gmail.com"
-setx EmailSettings__Password "YOUR_16_CHAR_APP_PASSWORD"
-```
+The password must be supplied on the server, not in Git. Two options:
 
-(Note the double underscore `__` separator for environment variables.)
+1. **Server-only `appsettings.Production.json` (recommended with FTP deploys).**
+   Create this file **on the server only**, in the site root next to `web.config`:
 
-### Restart the application after configuring secrets
+   ```json
+   { "EmailSettings": { "Password": "THE_MAILBOX_PASSWORD" } }
+   ```
 
-Configuration (including User Secrets) is read at startup, so **restart the app**
-after setting the secrets:
+   `appsettings.Production.json` is git-ignored and is **not** part of the publish
+   output, so uploading the contents of `publish/` never overwrites or removes it.
+   It is not served to browsers (only `wwwroot` is static). Recycle/restart the app
+   after creating or editing it.
 
-1. In the terminal running the app, press **Ctrl+C** to stop it.
-2. Start it again:
+2. **Environment variable `EmailSettings__Password`**, if the SmarterASP control panel
+   offers an environment-variable / application-settings screen for your plan (this
+   has not been verified for SmarterASP). Setting it in the server's `web.config`
+   under `<aspNetCore><environmentVariables>` also works, but `web.config` is part of
+   the publish output, so an upload would overwrite it.
 
-```powershell
-dotnet run --project CoreAudit.csproj --urls http://localhost:5090
-```
+### Test the contact form
 
-### Test the contact form locally
-
-1. Open **http://localhost:5090/Contact**.
-2. Fill in the form using a **real email you control** (so you can confirm `Reply-To`).
+1. Open `/Contact` (locally, or on the live site).
+2. Fill in the form with a **real email you control** (so you can confirm `Reply-To`).
 3. Submit.
-   - **Success:** a green Arabic message appears ("تم إرسال رسالتك بنجاح…") and the
-     email arrives at `coreauditcpa@gmail.com`. Replying to it goes to the visitor.
-   - **Failure:** a red Arabic message appears ("تعذر إرسال رسالتك…") with no internal
-     details — this is what you'll see if the secrets are not set or are wrong.
+   - **Success:** a green Arabic message appears and the email arrives at
+     `info@coreauditcpa.com`. Replying to it goes to the visitor.
+   - **Failure:** a red Arabic message appears with no internal details — expected
+     if the password is not set or is wrong.
 
-### Troubleshooting SMTP / sending failures
+### Troubleshooting
 
 | Symptom | Likely cause & fix |
 |---------|--------------------|
-| Error message on every submit | Secrets not set, or app not restarted after setting them. Run the `user-secrets set` commands and restart. |
-| `AuthenticationException` in logs (type only) | Wrong username or using the normal password. Use a **Gmail App Password**, not the account password. |
-| Auth fails even with app password | 2-Step Verification not enabled on the account, or the app password was revoked/typed with spaces. Regenerate and re-set it. |
-| Connection times out | Port `587` blocked by a firewall/network, or `Host`/`Port` wrong. The app auto-retries on 465. Confirm `smtp.gmail.com` and that outbound 587/465 is allowed. |
-| `SocketException` / times out on BOTH 587 and 465 | The network/ISP/firewall blocks outbound SMTP entirely. The app then **saves the submission to `App_Data/contact-messages/`** so nothing is lost, and the visitor still sees success. Test from a network that allows SMTP (e.g. a phone hotspot), unblock ports 587/465, or rely on the host's mail once deployed — email resumes automatically. |
-| TLS/handshake error | Ensure `UseStartTls` is `true` (Gmail on 587 requires STARTTLS). |
-| Email sends but lands in Spam | Expected for a plain Gmail sender; mark as "not spam", or use a verified domain/sender for production. |
-| Nothing in inbox, no error | Check the Gmail **Sent** folder and Spam; confirm `ToAddress` is correct. |
+| Error message on every submit | `EmailSettings:Password` not set, or the app was not restarted after setting it. |
+| `AuthenticationException` in logs (type only) | Wrong mailbox password, or `Username` is not the full address `info@coreauditcpa.com`. |
+| `SocketException` / timeout | The host blocks outbound connections to `mail.privateemail.com:465`. Ask the host to allow it, or set `EmailSettings:Provider` to `Resend`. |
+| `SslHandshakeException` | Port/mode mismatch: keep `Port` 465 (implicit SSL/TLS). |
+| Rejected sender | `FromAddress` must equal the authenticated `Username`. |
+| Sends but nothing arrives | The domain's MX records must point to Namecheap Private Email, and the `info@` mailbox must exist. Also check Spam. |
 
-Logs intentionally record only the **exception type** (never credentials or message
-content), so check the console output for a line like
-`Failed to send contact message. Error type: ...` when diagnosing.
+Logs record only the **exception type** (never credentials or message content), e.g.
+`SMTP delivery failed on port 465. Error type: ...`.
 
 ---
 

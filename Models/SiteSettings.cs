@@ -15,7 +15,7 @@ public class SiteSettings
     public string Domain { get; set; } = "coreauditcpa.com";
 
     /// <summary>Official contact email.</summary>
-    public string Email { get; set; } = "coreauditcpa@gmail.com";
+    public string Email { get; set; } = "info@coreauditcpa.com";
 
     /// <summary>
     /// Phone number exactly as provided. The country code is NOT assumed.

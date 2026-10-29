@@ -4,39 +4,44 @@ namespace CoreAudit.Models;
 /// Configuration for sending contact-form emails. Shared across providers.
 ///
 /// NON-secret values (Provider, Host, Port, UseStartTls, FromName, FromAddress,
-/// ToAddress) live in appsettings.json. SECRET values (SMTP Username/Password,
-/// and the Resend API key — see <see cref="ResendSettings"/>) must come from
-/// .NET User Secrets (local dev) or environment variables (production) and must
-/// NEVER be committed to source control.
+/// ToAddress, Username) live in appsettings.json. The only SECRETS are the SMTP
+/// <see cref="Password"/> and the Resend API key (see <see cref="ResendSettings"/>);
+/// they must come from .NET User Secrets (local dev) or server-side configuration /
+/// environment variables (production) and must NEVER be committed to source control.
 /// </summary>
 public class EmailSettings
 {
     /// <summary>
     /// Selects the delivery mechanism:
-    ///   "Resend" (default) -> HTTPS API, works on hosts that block outbound SMTP.
-    ///   "Smtp"             -> direct SMTP (kept for local dev / hosts that allow it).
+    ///   "Smtp" (default)   -> direct SMTP to Namecheap Private Email (mail.privateemail.com:465, implicit SSL/TLS).
+    ///   "Resend"           -> HTTPS API, for hosts that block outbound SMTP.
     /// Set via appsettings.json ("EmailSettings:Provider") or the EmailSettings__Provider env var.
     /// </summary>
-    public string Provider { get; set; } = "Resend";
+    public string Provider { get; set; } = "Smtp";
 
-    public string Host { get; set; } = "smtp.gmail.com";
-    public int Port { get; set; } = 587;
-    public bool UseStartTls { get; set; } = true;
+    public string Host { get; set; } = "mail.privateemail.com";
+
+    /// <summary>465 = implicit SSL/TLS (SslOnConnect). Any other port uses STARTTLS when <see cref="UseStartTls"/> is true.</summary>
+    public int Port { get; set; } = 465;
+    public bool UseStartTls { get; set; } = false;
 
     /// <summary>Display name shown on the "From" header.</summary>
     public string FromName { get; set; } = "Core Audit Website";
 
     /// <summary>
-    /// The authenticated sender address. For Gmail this must equal the Gmail
-    /// account that owns the app password (i.e. the Username).
+    /// The sender address. Namecheap Private Email only accepts mail whose sender is
+    /// the authenticated mailbox, so this must equal <see cref="Username"/>. The
+    /// visitor's address is never used as the sender (it is set as Reply-To).
     /// </summary>
-    public string FromAddress { get; set; } = "";
+    public string FromAddress { get; set; } = "info@coreauditcpa.com";
 
-    /// <summary>Where contact submissions are delivered.</summary>
-    public string ToAddress { get; set; } = "";
+    /// <summary>Where contact submissions are delivered. Defaults to the company inbox.</summary>
+    public string ToAddress { get; set; } = "info@coreauditcpa.com";
 
-    // ----- Secrets (from User Secrets / environment variables) -----
-    public string Username { get; set; } = "";
+    /// <summary>SMTP login (the mailbox address). Not a secret.</summary>
+    public string Username { get; set; } = "info@coreauditcpa.com";
+
+    /// <summary>SECRET. Supplied only via User Secrets / server-side configuration. Never in Git.</summary>
     public string Password { get; set; } = "";
 
     /// <summary>True only when every value the SMTP transport needs is present.</summary>

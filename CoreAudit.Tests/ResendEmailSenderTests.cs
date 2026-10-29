@@ -45,7 +45,7 @@ public class ResendEmailSenderTests
     private static EmailSettings EmailWithRecipient() => new()
     {
         Provider = "Resend",
-        ToAddress = "coreauditcpa@gmail.com"
+        ToAddress = "info@coreauditcpa.com"
     };
 
     [Fact]
@@ -63,7 +63,7 @@ public class ResendEmailSenderTests
         Assert.EndsWith("/emails", handler.LastRequest!.RequestUri!.AbsoluteUri);
         // The visitor's address is used as reply_to, and the body is JSON.
         Assert.Contains("reply_to", handler.LastRequestBody);
-        Assert.Contains("coreauditcpa@gmail.com", handler.LastRequestBody);
+        Assert.Contains("info@coreauditcpa.com", handler.LastRequestBody);
     }
 
     [Fact]
