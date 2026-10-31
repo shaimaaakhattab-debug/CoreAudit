@@ -36,6 +36,22 @@ else
 
 var app = builder.Build();
 
+// One-time startup diagnostic. Logs only the environment name, provider, host/port and
+// whether secrets are present (true/false). Never logs a secret or any other value.
+{
+    var email = app.Configuration.GetSection("EmailSettings").Get<EmailSettings>() ?? new EmailSettings();
+    var resend = app.Configuration.GetSection("Resend").Get<ResendSettings>() ?? new ResendSettings();
+    app.Logger.LogInformation(
+        "Startup config: Environment={Environment}, Provider={Provider}, Host={Host}, Port={Port}, " +
+        "PasswordConfigured={PasswordConfigured}, ApiKeyConfigured={ApiKeyConfigured}",
+        app.Environment.EnvironmentName,
+        emailProvider,
+        email.Host,
+        email.Port,
+        !string.IsNullOrWhiteSpace(email.Password),
+        !string.IsNullOrWhiteSpace(resend.ApiKey));
+}
+
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {

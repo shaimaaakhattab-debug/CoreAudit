@@ -40,7 +40,7 @@ public class ResendEmailSender : IEmailSender
     {
         if (!_resend.IsConfigured || string.IsNullOrWhiteSpace(_email.ToAddress))
         {
-            _logger.LogWarning("Resend is not fully configured (API key, From address, or To address missing); cannot send.");
+            _logger.LogWarning("Resend is not fully configured (API key, From address, or To address missing); cannot send. Category: ConfigurationMissing");
             return ContactDeliveryResult.Failed;
         }
 

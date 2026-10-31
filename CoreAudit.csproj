@@ -11,6 +11,13 @@
     <PackageReference Include="MailKit" Version="4.18.2" />
   </ItemGroup>
 
+  <!-- Server-only secrets file. It must never be published or uploaded by a normal
+       deploy; create it outside the repo and upload it to the host by hand. -->
+  <ItemGroup>
+    <Content Remove="appsettings.Production.json" />
+    <None Remove="appsettings.Production.json" />
+  </ItemGroup>
+
   <!-- The test project lives under CoreAudit.Tests/. Keep its sources out of the
        web app's compilation and out of content/publish so it is never deployed. -->
   <ItemGroup>

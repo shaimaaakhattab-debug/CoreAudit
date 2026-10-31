@@ -50,7 +50,7 @@ public class SmtpEmailSender : IEmailSender
     {
         if (!_settings.IsSmtpConfigured)
         {
-            _logger.LogWarning("SMTP settings are not fully configured; cannot send.");
+            _logger.LogWarning("SMTP settings are not fully configured; cannot send. Category: ConfigurationMissing");
             return ContactDeliveryResult.Failed;
         }
 
@@ -83,12 +83,30 @@ public class SmtpEmailSender : IEmailSender
         }
         catch (Exception ex)
         {
-            // Log the exception TYPE and port only — never credentials or message body.
-            _logger.LogError("SMTP delivery failed on port {Port}. Error type: {ErrorType}",
-                _settings.Port, ex.GetType().Name);
+            // Log the failure category, exception TYPE and port only — never credentials or message body.
+            _logger.LogError("SMTP delivery failed on port {Port}. Category: {Category}. Error type: {ErrorType}",
+                _settings.Port, ClassifyFailure(ex), ex.GetType().Name);
             return false;
         }
     }
+
+    /// <summary>
+    /// Maps an SMTP exception to a coarse, safe category for logs (never shown to visitors):
+    /// Authentication (bad login), Rejected (server refused the command/message),
+    /// Connection (unreachable, blocked port, timeout, TLS failure) or Unknown.
+    /// </summary>
+    public static string ClassifyFailure(Exception ex) => ex switch
+    {
+        // Also covers SaslException, which derives from it.
+        MailKit.Security.AuthenticationException => "Authentication",
+        MailKit.Net.Smtp.SmtpCommandException => "Rejected",
+        MailKit.Net.Smtp.SmtpProtocolException => "Connection",
+        System.Net.Sockets.SocketException => "Connection",
+        TimeoutException => "Connection",
+        System.IO.IOException => "Connection",
+        System.Security.Authentication.AuthenticationException => "Connection",
+        _ => "Unknown"
+    };
 
     /// <summary>
     /// Port 465 always uses implicit SSL/TLS (TLS starts on connect), as required by
