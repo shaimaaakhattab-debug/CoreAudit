@@ -23,6 +23,7 @@ public class ContentService : IContentService
             TitleAr = "المراجعة الخارجية",
             TitleEn = "External Audit",
             Icon = "bi-clipboard-check",
+            ImagePath = "/images/services/external-audit.svg",
             DescriptionAr = "خدمات مراجعة مهنية تهدف إلى دعم موثوقية ووضوح التقارير المالية وتعزيز الثقة في البيانات المعروضة.",
             IntroAr = "نقدم في كور أوديت خدمات مراجعة مهنية تهدف إلى دعم موثوقية ووضوح التقارير المالية وتعزيز الثقة في البيانات المعروضة. نعمل بدقة وحياد وسرية، ونعرض ملاحظاتنا بصورة منظمة وواضحة.",
             DetailParagraphsAr = new[]
@@ -52,6 +53,7 @@ public class ContentService : IContentService
             TitleAr = "الخدمات المحاسبية ومسك الدفاتر",
             TitleEn = "Accounting and Bookkeeping",
             Icon = "bi-journal-text",
+            ImagePath = "/images/services/accounting-bookkeeping.svg",
             DescriptionAr = "تنظيم السجلات المحاسبية ومسك الدفاتر وإدارة المعلومات المالية بطريقة دقيقة ومنظمة.",
             IntroAr = "نساعدك في كور أوديت على تنظيم سجلاتك المحاسبية وإدارة معلوماتك المالية بطريقة دقيقة ومنظمة، بما يمنحك صورة واضحة عن أعمالك ويسهّل الرجوع إلى بياناتك.",
             DetailParagraphsAr = new[]
@@ -81,6 +83,7 @@ public class ContentService : IContentService
             TitleAr = "الاستشارات الضريبية والمالية",
             TitleEn = "Tax and Financial Consulting",
             Icon = "bi-graph-up-arrow",
+            ImagePath = "/images/services/tax-financial-consulting.svg",
             DescriptionAr = "الدعم في المسائل الضريبية والتخطيط المالي، بما يتوافق مع الأنظمة المعمول بها ونطاق خدمات المكتب.",
             IntroAr = "نقدم في كور أوديت دعمًا في المسائل الضريبية والتخطيط المالي بما يتوافق مع الأنظمة المعمول بها ونطاق خدمات المكتب، لمساعدتك على فهم وضعك المالي واتخاذ قرارات أكثر وضوحًا.",
             DetailParagraphsAr = new[]
@@ -109,6 +112,7 @@ public class ContentService : IContentService
             TitleAr = "المراجعة الداخلية وإدارة المخاطر",
             TitleEn = "Internal Audit and Risk Management",
             Icon = "bi-shield-check",
+            ImagePath = "/images/services/internal-audit-risk.svg",
             DescriptionAr = "دعم تقييم العمليات الداخلية والضوابط الرقابية والمخاطر المحتملة التي قد تواجه الأعمال.",
             IntroAr = "نساعدك في كور أوديت على تقييم العمليات الداخلية والضوابط الرقابية وفهم المخاطر المحتملة التي قد تواجه أعمالك، وعرض الملاحظات بصورة منظمة وواضحة.",
             DetailParagraphsAr = new[]
@@ -138,6 +142,7 @@ public class ContentService : IContentService
             TitleAr = "إعداد التقارير المالية",
             TitleEn = "Financial Reporting",
             Icon = "bi-file-earmark-bar-graph",
+            ImagePath = "/images/services/financial-reporting.svg",
             DescriptionAr = "تقارير مالية واضحة ومنظمة تساعد الأعمال على فهم مركزها المالي بشكل أفضل.",
             IntroAr = "نعد في كور أوديت تقارير مالية واضحة ومنظمة تساعد الأعمال على فهم مركزها المالي بشكل أفضل، ونحرص على أن تكون مرتبة وسهلة الفهم.",
             DetailParagraphsAr = new[]
@@ -166,6 +171,7 @@ public class ContentService : IContentService
             TitleAr = "استشارات الأعمال",
             TitleEn = "Business Consulting",
             Icon = "bi-lightbulb",
+            ImagePath = "/images/services/business-consulting.svg",
             DescriptionAr = "رؤى مالية وتجارية تدعم عمليات التخطيط واتخاذ القرار على مستوى الأعمال.",
             IntroAr = "نقدم في كور أوديت رؤى مالية وتجارية تدعم عمليات التخطيط واتخاذ القرار على مستوى الأعمال، انطلاقًا من فهم احتياجاتك وطبيعة نشاطك.",
             DetailParagraphsAr = new[]
@@ -194,6 +200,7 @@ public class ContentService : IContentService
             TitleAr = "الدعم القضائي",
             TitleEn = "Judicial Support",
             Icon = "bi-bank2",
+            ImagePath = "/images/services/judicial-support.svg",
             DescriptionAr = "دعم محاسبي وفني للقضايا والنزاعات يشمل تقارير الخبرة وحصر الموجودات والمديونيات.",
             HeroSubAr = "دعم محاسبي وفني للقضايا والنزاعات",
             IntroAr = "نقدم في كور أوديت دعمًا محاسبيًا وفنيًا يساعد أطراف القضايا والنزاعات على فهم الجوانب المالية بوضوح وتنظيم المستندات والبيانات ذات الصلة. يعتمد عملنا على الدقة والحياد والسرية، ونعرض النتائج في تقارير منظمة تسهّل الرجوع إليها. وتقتصر خدماتنا على الجانب المحاسبي والفني، ولا تغني عن المشورة القانونية المتخصصة.",

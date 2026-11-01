@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500" role="img">
+  <title>الاستشارات الضريبية والمالية</title>
+  <rect width="800" height="500" fill="#f7f4ee"/>
+  <circle cx="400" cy="250" r="210" fill="#e9e3d4"/>
+  <circle cx="680" cy="90" r="60" fill="#ddc08c" opacity=".35"/>
+  <circle cx="110" cy="420" r="80" fill="#1b2a4a" opacity=".07"/>
+  <!-- tax document -->
+  <rect x="120" y="80" width="250" height="340" rx="14" fill="#ffffff" stroke="#e1e5ee" stroke-width="2"/>
+  <path d="M120 94a14 14 0 0 1 14-14h222a14 14 0 0 1 14 14v40H120z" fill="#1b2a4a"/>
+  <rect x="144" y="98" width="90" height="12" rx="6" fill="#ddc08c"/>
+  <rect x="144" y="116" width="60" height="8" rx="4" fill="#5f7396"/>
+  <!-- percent badge -->
+  <circle cx="245" cy="250" r="62" fill="#b89150"/>
+  <circle cx="245" cy="250" r="52" fill="none" stroke="#ffffff" stroke-width="3" stroke-dasharray="6 6"/>
+  <line x1="219" y1="278" x2="271" y2="222" stroke="#ffffff" stroke-width="9" stroke-linecap="round"/>
+  <circle cx="222" cy="226" r="9" fill="none" stroke="#ffffff" stroke-width="8"/>
+  <circle cx="268" cy="274" r="9" fill="none" stroke="#ffffff" stroke-width="8"/>
+  <g fill="#c9d1e0">
+    <rect x="144" y="340" width="200" height="10" rx="5"/>
+    <rect x="144" y="366" width="140" height="10" rx="5"/>
+  </g>
+  <rect x="144" y="392" width="200" height="3" fill="#1b2a4a"/>
+  <!-- chart panel -->
+  <rect x="400" y="110" width="290" height="210" rx="14" fill="#1b2a4a"/>
+  <g stroke="#2f4a72" stroke-width="2">
+    <line x1="424" y1="170" x2="666" y2="170"/>
+    <line x1="424" y1="220" x2="666" y2="220"/>
+    <line x1="424" y1="270" x2="666" y2="270"/>
+  </g>
+  <g fill="#5f7396">
+    <rect x="436" y="226" width="34" height="44" rx="4"/>
+    <rect x="490" y="204" width="34" height="66" rx="4"/>
+    <rect x="544" y="182" width="34" height="88" rx="4"/>
+  </g>
+  <rect x="598" y="150" width="34" height="120" rx="4" fill="#ddc08c"/>
+  <path d="M440 206L507 172L561 148L620 118" fill="none" stroke="#ffffff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M598 114l30 2-6 28z" fill="#ffffff"/>
+  <rect x="424" y="290" width="242" height="6" rx="3" fill="#2f4a72"/>
+  <!-- coins -->
+  <g>
+    <ellipse cx="520" cy="410" rx="70" ry="20" fill="#8c6a31"/>
+    <rect x="450" y="392" width="140" height="18" fill="#8c6a31"/>
+    <ellipse cx="520" cy="392" rx="70" ry="20" fill="#b89150"/>
+    <ellipse cx="520" cy="374" rx="70" ry="20" fill="#8c6a31"/>
+    <rect x="450" y="356" width="140" height="18" fill="#8c6a31"/>
+    <ellipse cx="520" cy="356" rx="70" ry="20" fill="#c9a86a"/>
+    <ellipse cx="520" cy="356" rx="48" ry="12" fill="none" stroke="#f2e3c6" stroke-width="3"/>
+  </g>
+  <g>
+    <ellipse cx="640" cy="414" rx="48" ry="14" fill="#8c6a31"/>
+    <rect x="592" y="396" width="96" height="18" fill="#8c6a31"/>
+    <ellipse cx="640" cy="396" rx="48" ry="14" fill="#c9a86a"/>
+    <ellipse cx="640" cy="396" rx="32" ry="8" fill="none" stroke="#f2e3c6" stroke-width="3"/>
+  </g>
+</svg>

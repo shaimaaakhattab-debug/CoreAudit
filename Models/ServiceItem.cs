@@ -9,6 +9,8 @@ public class ServiceItem
     public string DescriptionAr { get; set; } = "";
     /// <summary>Bootstrap Icons class name, e.g. "bi-clipboard-check".</summary>
     public string Icon { get; set; } = "bi-briefcase";
+    /// <summary>Root-relative path of the service illustration, e.g. "/images/services/external-audit.svg".</summary>
+    public string ImagePath { get; set; } = "";
 
     // Detail-page content (every service has a detail page).
     /// <summary>Optional hero subtitle; falls back to DescriptionAr when empty.</summary>

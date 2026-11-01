@@ -191,6 +191,14 @@ a:hover { color: var(--gold-500); }
 }
 .service-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-md); border-color: var(--gold-300); }
 .service-card:hover::before { transform: scaleX(1); }
+.service-card-img {
+    display: block; width: calc(100% + 3.2rem); max-width: none; height: auto; aspect-ratio: 16 / 10; object-fit: cover;
+    margin-block: -2rem 1.2rem; margin-inline: -1.6rem;
+}
+.service-detail-img {
+    display: block; width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover;
+    border-radius: var(--radius); box-shadow: var(--shadow-md);
+}
 .service-icon {
     width: 64px; height: 64px; border-radius: 16px; display: grid; place-items: center;
     background: linear-gradient(135deg, rgba(27,42,74,.08), rgba(184,145,80,.14)); margin-bottom: 1.2rem;

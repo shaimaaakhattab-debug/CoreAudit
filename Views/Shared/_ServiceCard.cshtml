@@ -1,6 +1,10 @@
 @model CoreAudit.Models.ServiceItem
 <a asp-controller="Services" asp-action="Details" asp-route-id="@Model.Slug" class="service-card-link">
     <div class="service-card h-100">
+        @if (!string.IsNullOrEmpty(Model.ImagePath))
+        {
+            <img src="@Model.ImagePath" alt="" aria-hidden="true" width="800" height="500" class="service-card-img">
+        }
         <div class="service-icon" aria-hidden="true">
             <i class="bi @Model.Icon"></i>
         </div>

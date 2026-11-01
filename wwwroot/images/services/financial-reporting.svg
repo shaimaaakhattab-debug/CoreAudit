@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500" role="img">
+  <title>إعداد التقارير المالية</title>
+  <rect width="800" height="500" fill="#f7f4ee"/>
+  <circle cx="400" cy="250" r="210" fill="#e9e3d4"/>
+  <circle cx="680" cy="80" r="60" fill="#ddc08c" opacity=".35"/>
+  <circle cx="110" cy="430" r="80" fill="#1b2a4a" opacity=".07"/>
+  <!-- report sheet -->
+  <rect x="150" y="50" width="500" height="400" rx="16" fill="#ffffff" stroke="#e1e5ee" stroke-width="2"/>
+  <path d="M150 66a16 16 0 0 1 16-16h468a16 16 0 0 1 16 16v54H150z" fill="#1b2a4a"/>
+  <rect x="180" y="74" width="140" height="14" rx="7" fill="#ddc08c"/>
+  <rect x="180" y="96" width="90" height="9" rx="4.5" fill="#5f7396"/>
+  <circle cx="598" cy="85" r="22" fill="#b89150"/>
+  <path d="M588 85l8 8 14-16" fill="none" stroke="#ffffff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- bar chart -->
+  <rect x="180" y="150" width="250" height="190" rx="10" fill="#fbfaf6"/>
+  <g stroke="#e1e5ee" stroke-width="2">
+    <line x1="200" y1="200" x2="410" y2="200"/>
+    <line x1="200" y1="250" x2="410" y2="250"/>
+  </g>
+  <line x1="200" y1="300" x2="410" y2="300" stroke="#1b2a4a" stroke-width="3"/>
+  <rect x="214" y="250" width="34" height="50" rx="4" fill="#5f7396"/>
+  <rect x="264" y="215" width="34" height="85" rx="4" fill="#243b5e"/>
+  <rect x="314" y="236" width="34" height="64" rx="4" fill="#5f7396"/>
+  <rect x="364" y="178" width="34" height="122" rx="4" fill="#b89150"/>
+  <g fill="#c9d1e0">
+    <rect x="214" y="314" width="34" height="7" rx="3.5"/>
+    <rect x="264" y="314" width="34" height="7" rx="3.5"/>
+    <rect x="314" y="314" width="34" height="7" rx="3.5"/>
+    <rect x="364" y="314" width="34" height="7" rx="3.5"/>
+  </g>
+  <!-- pie chart -->
+  <rect x="450" y="150" width="170" height="190" rx="10" fill="#fbfaf6"/>
+  <circle cx="535" cy="235" r="56" fill="#243b5e"/>
+  <path d="M535 235V179A56 56 0 0 1 591 235Z" fill="#b89150"/>
+  <path d="M535 235H591A56 56 0 0 1 560 285.2Z" fill="#ddc08c"/>
+  <circle cx="535" cy="235" r="22" fill="#fbfaf6"/>
+  <g>
+    <rect x="474" y="312" width="14" height="10" rx="3" fill="#243b5e"/>
+    <rect x="494" y="313" width="30" height="8" rx="4" fill="#c9d1e0"/>
+    <rect x="540" y="312" width="14" height="10" rx="3" fill="#b89150"/>
+    <rect x="560" y="313" width="30" height="8" rx="4" fill="#c9d1e0"/>
+  </g>
+  <!-- text lines and totals -->
+  <g fill="#c9d1e0">
+    <rect x="180" y="368" width="260" height="10" rx="5"/>
+    <rect x="180" y="392" width="200" height="10" rx="5"/>
+    <rect x="180" y="416" width="230" height="10" rx="5"/>
+  </g>
+  <rect x="470" y="372" width="150" height="50" rx="10" fill="#1b2a4a"/>
+  <rect x="486" y="390" width="70" height="10" rx="5" fill="#ddc08c"/>
+  <path d="M575 404l14-14 10 9 12-14" fill="none" stroke="#b89150" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

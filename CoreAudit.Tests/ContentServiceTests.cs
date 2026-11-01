@@ -74,6 +74,33 @@ public class ContentServiceTests
     }
 
     [Fact]
+    public void Every_service_has_an_existing_valid_svg_image()
+    {
+        var wwwroot = FindWwwroot();
+        foreach (var s in new ContentService().GetServices())
+        {
+            Assert.Equal($"/images/services/{s.Slug}.svg", s.ImagePath);
+            var file = Path.Combine(wwwroot, s.ImagePath.TrimStart('/').Replace('/', Path.DirectorySeparatorChar));
+            Assert.True(File.Exists(file), file);
+            var doc = System.Xml.Linq.XDocument.Load(file);
+            Assert.Equal("svg", doc.Root!.Name.LocalName);
+        }
+    }
+
+    private static string FindWwwroot()
+    {
+        var dir = new DirectoryInfo(AppContext.BaseDirectory);
+        while (dir is not null)
+        {
+            var candidate = Path.Combine(dir.FullName, "wwwroot");
+            if (Directory.Exists(candidate) && File.Exists(Path.Combine(dir.FullName, "CoreAudit.csproj")))
+                return candidate;
+            dir = dir.Parent;
+        }
+        throw new DirectoryNotFoundException("wwwroot not found");
+    }
+
+    [Fact]
     public void Approved_arabic_content_is_exact()
     {
         var services = new ContentService().GetServices();

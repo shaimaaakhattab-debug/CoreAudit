@@ -25,6 +25,14 @@
 
 <section class="section" aria-label="@Model.TitleAr">
     <div class="container">
+        <div class="row g-4 g-lg-5 align-items-start">
+        @if (!string.IsNullOrEmpty(Model.ImagePath))
+        {
+            <div class="col-12 col-lg-5 order-first order-lg-last">
+                <img src="@Model.ImagePath" alt="@Model.TitleAr" width="800" height="500" class="service-detail-img">
+            </div>
+        }
+        <div class="col-12 col-lg-7">
         <div class="service-icon" aria-hidden="true">
             <i class="bi @Model.Icon"></i>
         </div>
@@ -55,6 +63,8 @@
             </ul>
         }
         <a asp-controller="Services" asp-action="Index" class="btn btn-navy">العودة إلى خدماتنا</a>
+        </div>
+        </div>
     </div>
 </section>
 

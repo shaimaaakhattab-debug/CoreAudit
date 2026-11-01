@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500" role="img">
+  <title>الدعم القضائي</title>
+  <rect width="800" height="500" fill="#f7f4ee"/>
+  <circle cx="400" cy="250" r="210" fill="#e9e3d4"/>
+  <circle cx="680" cy="90" r="60" fill="#ddc08c" opacity=".35"/>
+  <circle cx="110" cy="430" r="80" fill="#1b2a4a" opacity=".07"/>
+  <!-- scales -->
+  <rect x="270" y="436" width="260" height="22" rx="8" fill="#1b2a4a"/>
+  <rect x="310" y="420" width="180" height="20" rx="6" fill="#243b5e"/>
+  <rect x="386" y="110" width="28" height="312" rx="6" fill="#243b5e"/>
+  <circle cx="400" cy="92" r="26" fill="#b89150"/>
+  <circle cx="400" cy="92" r="11" fill="#f7f4ee"/>
+  <!-- beam -->
+  <path d="M130 140Q400 80 670 140" fill="none" stroke="#1b2a4a" stroke-width="14" stroke-linecap="round"/>
+  <circle cx="130" cy="140" r="10" fill="#b89150"/>
+  <circle cx="670" cy="140" r="10" fill="#b89150"/>
+  <!-- chains left -->
+  <g stroke="#b89150" stroke-width="4" stroke-linecap="round">
+    <line x1="130" y1="150" x2="70" y2="290"/>
+    <line x1="130" y1="150" x2="190" y2="290"/>
+    <line x1="130" y1="150" x2="130" y2="290"/>
+    <line x1="670" y1="150" x2="610" y2="290"/>
+    <line x1="670" y1="150" x2="730" y2="290"/>
+    <line x1="670" y1="150" x2="670" y2="290"/>
+  </g>
+  <!-- left pan with ledger -->
+  <path d="M50 290H210A80 56 0 0 1 50 290Z" fill="#b89150"/>
+  <rect x="70" y="236" width="120" height="54" rx="6" fill="#ffffff" stroke="#c9d1e0" stroke-width="2"/>
+  <rect x="70" y="236" width="120" height="14" rx="6" fill="#1b2a4a"/>
+  <g fill="#c9d1e0">
+    <rect x="82" y="260" width="56" height="6" rx="3"/>
+    <rect x="82" y="273" width="40" height="6" rx="3"/>
+  </g>
+  <rect x="152" y="258" width="26" height="20" rx="4" fill="#b89150"/>
+  <!-- right pan with documents and coins -->
+  <path d="M590 290H750A80 56 0 0 1 590 290Z" fill="#b89150"/>
+  <rect x="610" y="224" width="70" height="66" rx="6" fill="#ffffff" stroke="#c9d1e0" stroke-width="2"/>
+  <path d="M610 230a6 6 0 0 1 6-6h58a6 6 0 0 1 6 6v8h-70z" fill="#243b5e"/>
+  <g fill="#c9d1e0">
+    <rect x="620" y="250" width="50" height="6" rx="3"/>
+    <rect x="620" y="264" width="34" height="6" rx="3"/>
+  </g>
+  <ellipse cx="710" cy="284" rx="26" ry="7" fill="#8c6a31"/>
+  <rect x="684" y="272" width="52" height="12" fill="#8c6a31"/>
+  <ellipse cx="710" cy="272" rx="26" ry="7" fill="#ddc08c"/>
+  <ellipse cx="710" cy="262" rx="26" ry="7" fill="#c9a86a"/>
+  <!-- center stand documents -->
+  <rect x="440" y="320" width="130" height="96" rx="10" fill="#ffffff" stroke="#e1e5ee" stroke-width="2"/>
+  <rect x="440" y="320" width="130" height="24" rx="10" fill="#1b2a4a"/>
+  <g fill="#c9d1e0">
+    <rect x="456" y="358" width="98" height="8" rx="4"/>
+    <rect x="456" y="376" width="70" height="8" rx="4"/>
+  </g>
+  <path d="M530 396l9 9 18-20" fill="none" stroke="#b89150" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="236" y="340" width="120" height="76" rx="10" fill="#243b5e"/>
+  <g fill="#ddc08c">
+    <rect x="252" y="356" width="60" height="8" rx="4"/>
+    <rect x="252" y="374" width="88" height="8" rx="4" fill="#5f7396"/>
+    <rect x="252" y="392" width="44" height="8" rx="4" fill="#5f7396"/>
+  </g>
+</svg>
