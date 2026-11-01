@@ -1,3 +1,4 @@
+using System.Text.RegularExpressions;
 using CoreAudit.Services;
 using Xunit;
 
@@ -5,12 +6,6 @@ namespace CoreAudit.Tests;
 
 public class ContentServiceTests
 {
-    private static readonly string[] OriginalSlugs =
-    {
-        "external-audit", "accounting-bookkeeping", "tax-financial-consulting",
-        "internal-audit-risk", "financial-reporting", "business-consulting"
-    };
-
     [Fact]
     public void Judicial_support_is_the_seventh_and_last_service()
     {
@@ -20,7 +15,7 @@ public class ContentServiceTests
         var last = services[^1];
         Assert.Equal("judicial-support", last.Slug);
         Assert.Equal("الدعم القضائي", last.TitleAr);
-        Assert.True(last.HasDetails);
+        Assert.True(last.BulletsAr.Count > 0);
     }
 
     [Fact]
@@ -37,6 +32,16 @@ public class ContentServiceTests
     }
 
     [Fact]
+    public void Judicial_support_keeps_its_hero_subtitle_and_has_no_extra_sections()
+    {
+        var item = new ContentService().GetServices().Single(s => s.Slug == "judicial-support");
+
+        Assert.Equal("دعم محاسبي وفني للقضايا والنزاعات", item.HeroSubAr);
+        Assert.Empty(item.DeliverablesAr);
+        Assert.Empty(item.DetailParagraphsAr);
+    }
+
+    [Fact]
     public void Slugs_are_unique()
     {
         var slugs = new ContentService().GetServices().Select(s => s.Slug).ToList();
@@ -44,13 +49,40 @@ public class ContentServiceTests
     }
 
     [Fact]
-    public void Original_services_remain_without_detail_pages()
+    public void Slugs_are_url_safe()
+    {
+        foreach (var service in new ContentService().GetServices())
+        {
+            Assert.Matches(new Regex("^[a-z0-9]+(-[a-z0-9]+)*$"), service.Slug);
+        }
+    }
+
+    [Fact]
+    public void Every_service_has_complete_detail_content()
+    {
+        foreach (var s in new ContentService().GetServices())
+        {
+            Assert.False(string.IsNullOrWhiteSpace(s.IntroAr), s.Slug);
+            Assert.False(string.IsNullOrWhiteSpace(s.LeadInAr), s.Slug);
+            Assert.NotEmpty(s.BulletsAr);
+            Assert.False(string.IsNullOrWhiteSpace(s.CtaHeadingAr), s.Slug);
+            Assert.False(string.IsNullOrWhiteSpace(s.CtaTextAr), s.Slug);
+            Assert.All(s.BulletsAr, b => Assert.False(string.IsNullOrWhiteSpace(b)));
+            Assert.All(s.DetailParagraphsAr, p => Assert.False(string.IsNullOrWhiteSpace(p)));
+            Assert.All(s.DeliverablesAr, d => Assert.False(string.IsNullOrWhiteSpace(d)));
+        }
+    }
+
+    [Fact]
+    public void Approved_arabic_content_is_exact()
     {
         var services = new ContentService().GetServices();
-        foreach (var slug in OriginalSlugs)
-        {
-            var item = Assert.Single(services, s => s.Slug == slug);
-            Assert.False(item.HasDetails);
-        }
+
+        Assert.Equal(
+            "نقدم في كور أوديت خدمات مراجعة مهنية تهدف إلى دعم موثوقية ووضوح التقارير المالية وتعزيز الثقة في البيانات المعروضة. نعمل بدقة وحياد وسرية، ونعرض ملاحظاتنا بصورة منظمة وواضحة.",
+            services.Single(s => s.Slug == "external-audit").IntroAr);
+        Assert.Equal(
+            "هل تحتاج إلى رؤى تدعم قراراتك؟",
+            services.Single(s => s.Slug == "business-consulting").CtaHeadingAr);
     }
 }

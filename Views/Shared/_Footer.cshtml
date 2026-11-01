@@ -54,7 +54,7 @@
                 <ul class="footer-links">
                     @foreach (var s in footerServices)
                     {
-                        <li><a asp-controller="Services" asp-action="Index">@s.TitleAr</a></li>
+                        <li><a asp-controller="Services" asp-action="Details" asp-route-id="@s.Slug">@s.TitleAr</a></li>
                     }
                 </ul>
             </div>

@@ -20,13 +20,13 @@ public class ServicesController : Controller
         return View(model);
     }
 
-    // GET /Services/Details/{slug} -> detail page for services that have detail content
+    // GET /Services/Details/{slug} -> detail page for each service
     public IActionResult Details(string id)
     {
         var service = _content.GetServices().FirstOrDefault(s =>
             string.Equals(s.Slug, id, StringComparison.OrdinalIgnoreCase));
 
-        if (service is null || !service.HasDetails)
+        if (service is null)
         {
             return NotFound();
         }

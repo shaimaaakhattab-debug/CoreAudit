@@ -34,9 +34,20 @@ public class ServicesControllerTests
         Assert.IsType<NotFoundResult>(BuildController().Details("unknown-slug"));
     }
 
-    [Fact]
-    public void Details_returns_not_found_for_service_without_details()
+    [Theory]
+    [InlineData("external-audit")]
+    [InlineData("accounting-bookkeeping")]
+    [InlineData("tax-financial-consulting")]
+    [InlineData("internal-audit-risk")]
+    [InlineData("financial-reporting")]
+    [InlineData("business-consulting")]
+    [InlineData("judicial-support")]
+    public void Details_returns_view_with_model_for_every_service(string slug)
     {
-        Assert.IsType<NotFoundResult>(BuildController().Details("external-audit"));
+        var result = BuildController().Details(slug);
+
+        var view = Assert.IsType<ViewResult>(result);
+        var model = Assert.IsType<ServiceItem>(view.Model);
+        Assert.Equal(slug, model.Slug);
     }
 }

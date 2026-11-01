@@ -9,7 +9,7 @@
 <section class="page-hero" aria-label="@Model.TitleAr">
     <div class="container">
         <h1 class="page-hero-title">@Model.TitleAr</h1>
-        <p class="page-hero-sub">دعم محاسبي وفني للقضايا والنزاعات</p>
+        <p class="page-hero-sub">@(string.IsNullOrEmpty(Model.HeroSubAr) ? Model.DescriptionAr : Model.HeroSubAr)</p>
     </div>
 </section>
 
@@ -29,6 +29,14 @@
             <i class="bi @Model.Icon"></i>
         </div>
         <p class="about-text">@Model.IntroAr</p>
+        @foreach (var paragraph in Model.DetailParagraphsAr)
+        {
+            <p class="about-text">@paragraph</p>
+        }
+        @if (Model.DeliverablesAr.Count > 0 || Model.DetailParagraphsAr.Count > 0)
+        {
+            <h2 class="h4">الأنشطة الرئيسية</h2>
+        }
         <p class="about-text"><strong>@Model.LeadInAr</strong></p>
         <ul class="about-points">
             @foreach (var bullet in Model.BulletsAr)
@@ -36,6 +44,16 @@
                 <li><i class="bi bi-check-circle-fill" aria-hidden="true"></i> @bullet</li>
             }
         </ul>
+        @if (Model.DeliverablesAr.Count > 0)
+        {
+            <h2 class="h4">المخرجات</h2>
+            <ul class="about-points">
+                @foreach (var item in Model.DeliverablesAr)
+                {
+                    <li><i class="bi bi-check-circle-fill" aria-hidden="true"></i> @item</li>
+                }
+            </ul>
+        }
         <a asp-controller="Services" asp-action="Index" class="btn btn-navy">العودة إلى خدماتنا</a>
     </div>
 </section>

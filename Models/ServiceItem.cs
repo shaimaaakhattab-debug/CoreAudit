@@ -10,13 +10,16 @@ public class ServiceItem
     /// <summary>Bootstrap Icons class name, e.g. "bi-clipboard-check".</summary>
     public string Icon { get; set; } = "bi-briefcase";
 
-    // Optional detail-page content. A service has a detail page only when BulletsAr is not empty.
+    // Detail-page content (every service has a detail page).
+    /// <summary>Optional hero subtitle; falls back to DescriptionAr when empty.</summary>
+    public string HeroSubAr { get; set; } = "";
     public string IntroAr { get; set; } = "";
+    public IReadOnlyList<string> DetailParagraphsAr { get; set; } = Array.Empty<string>();
     public string LeadInAr { get; set; } = "";
     public IReadOnlyList<string> BulletsAr { get; set; } = Array.Empty<string>();
+    public IReadOnlyList<string> DeliverablesAr { get; set; } = Array.Empty<string>();
     public string CtaHeadingAr { get; set; } = "";
     public string CtaTextAr { get; set; } = "";
-    public bool HasDetails => BulletsAr.Count > 0;
 }
 
 /// <summary>A guiding principle shown in the "Why choose us" section.</summary>
