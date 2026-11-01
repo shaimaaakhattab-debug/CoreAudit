@@ -1,8 +1,24 @@
 @model CoreAudit.Models.ServiceItem
-<div class="service-card h-100">
-    <div class="service-icon" aria-hidden="true">
-        <i class="bi @Model.Icon"></i>
+@if (Model.HasDetails)
+{
+    <a asp-controller="Services" asp-action="Details" asp-route-id="@Model.Slug" class="service-card-link">
+        <div class="service-card h-100">
+            <div class="service-icon" aria-hidden="true">
+                <i class="bi @Model.Icon"></i>
+            </div>
+            <h3 class="service-title h5">@Model.TitleAr</h3>
+            <p class="service-desc">@Model.DescriptionAr</p>
+            <span class="service-link">اعرف المزيد <i class="bi bi-arrow-left" aria-hidden="true"></i></span>
+        </div>
+    </a>
+}
+else
+{
+    <div class="service-card h-100">
+        <div class="service-icon" aria-hidden="true">
+            <i class="bi @Model.Icon"></i>
+        </div>
+        <h3 class="service-title h5">@Model.TitleAr</h3>
+        <p class="service-desc">@Model.DescriptionAr</p>
     </div>
-    <h3 class="service-title h5">@Model.TitleAr</h3>
-    <p class="service-desc">@Model.DescriptionAr</p>
-</div>
+}

@@ -19,4 +19,18 @@ public class ServicesController : Controller
         ViewData["ProcessSteps"] = _content.GetProcessSteps();
         return View(model);
     }
+
+    // GET /Services/Details/{slug} -> detail page for services that have detail content
+    public IActionResult Details(string id)
+    {
+        var service = _content.GetServices().FirstOrDefault(s =>
+            string.Equals(s.Slug, id, StringComparison.OrdinalIgnoreCase));
+
+        if (service is null || !service.HasDetails)
+        {
+            return NotFound();
+        }
+
+        return View(service);
+    }
 }

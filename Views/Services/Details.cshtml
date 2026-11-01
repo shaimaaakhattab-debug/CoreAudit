@@ -1,0 +1,43 @@
+@model CoreAudit.Models.ServiceItem
+@{
+    ViewData["Title"] = Model.TitleAr;
+    ViewData["MetaDescription"] = Model.DescriptionAr;
+    ViewData["CtaHeading"] = Model.CtaHeadingAr;
+    ViewData["CtaText"] = Model.CtaTextAr;
+}
+
+<section class="page-hero" aria-label="@Model.TitleAr">
+    <div class="container">
+        <h1 class="page-hero-title">@Model.TitleAr</h1>
+        <p class="page-hero-sub">دعم محاسبي وفني للقضايا والنزاعات</p>
+    </div>
+</section>
+
+<nav class="breadcrumb-bar" aria-label="مسار التنقل">
+    <div class="container">
+        <ol class="breadcrumb-list">
+            <li><a asp-controller="Home" asp-action="Index">الرئيسية</a></li>
+            <li><a asp-controller="Services" asp-action="Index">خدماتنا</a></li>
+            <li aria-current="page">@Model.TitleAr</li>
+        </ol>
+    </div>
+</nav>
+
+<section class="section" aria-label="@Model.TitleAr">
+    <div class="container">
+        <div class="service-icon" aria-hidden="true">
+            <i class="bi @Model.Icon"></i>
+        </div>
+        <p class="about-text">@Model.IntroAr</p>
+        <p class="about-text"><strong>@Model.LeadInAr</strong></p>
+        <ul class="about-points">
+            @foreach (var bullet in Model.BulletsAr)
+            {
+                <li><i class="bi bi-check-circle-fill" aria-hidden="true"></i> @bullet</li>
+            }
+        </ul>
+        <a asp-controller="Services" asp-action="Index" class="btn btn-navy">العودة إلى خدماتنا</a>
+    </div>
+</section>
+
+<partial name="_CtaSection" />
