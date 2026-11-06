@@ -38,7 +38,6 @@ public class SitemapController : Controller
         urls.AddRange(_content.GetServices().Select(s => Absolute("Details", "Services", s.Slug)));
         urls.AddRange(new[]
         {
-            Absolute("Index", "CrownPrince"),
             Absolute("Index", "Contact"),
             Absolute("Privacy", "Home"),
         });

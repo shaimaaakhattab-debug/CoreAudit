@@ -54,6 +54,7 @@ public class SitemapControllerTests
             Assert.Contains($"https://coreauditcpa.com/Services/Details/{s.Slug}", urls);
         }
         Assert.DoesNotContain(urls, u => u.Contains("business-consulting"));
+        Assert.DoesNotContain(urls, u => u.Contains("CrownPrince"));
         Assert.All(urls, u => Assert.StartsWith("https://coreauditcpa.com/", u));
         Assert.Equal(urls.Count, urls.Distinct().Count());
     }
