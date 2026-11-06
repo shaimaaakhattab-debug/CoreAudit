@@ -1,28 +1,106 @@
-﻿@{
+﻿@using System.Text.Encodings.Web
+@using System.Text.Json
+@using System.Text.Unicode
+@{
     var site = SiteOptions.Value;
     var metaDescription = ViewData["MetaDescription"] as string
         ?? "شركة كور أوديت (Core Audit) - محاسبون ومراجعون قانونيون. خدمات مهنية في المراجعة الخارجية والمحاسبة والاستشارات الضريبية والمالية.";
     var pageTitle = ViewData["Title"] as string;
+
+    // One title string for <title>, og:title and twitter:title so they never conflict.
+    // The homepage sets no page title, so its title is exactly the site title.
+    var fullTitle = string.IsNullOrWhiteSpace(pageTitle) ? site.SiteTitleAr : $"{pageTitle} | {site.SiteTitleAr}";
+
+    // Canonical URL on the production host, built from the current route so it matches
+    // the site's own links (e.g. "/" for the homepage, "/Services/Details/{slug}").
+    var routeValues = ViewContext.RouteData.Values;
+    var controllerName = routeValues["controller"]?.ToString();
+    var actionName = routeValues["action"]?.ToString();
+    var isHome = string.Equals(controllerName, "Home", StringComparison.OrdinalIgnoreCase)
+                 && string.Equals(actionName, "Index", StringComparison.OrdinalIgnoreCase);
+    var siteUrl = $"https://{site.Domain}/";
+    var canonicalUrl = isHome
+        ? siteUrl
+        : Url.Action(actionName, controllerName, new { id = routeValues["id"] }, "https", site.Domain) ?? siteUrl;
+    var logoUrl = $"https://{site.Domain}{site.LogoPath}";
+
+    // Structured data (homepage only): WebSite name = official site title, plus the company.
+    string? jsonLd = null;
+    if (isHome)
+    {
+        var sameAs = new[] { site.YouTubeUrl, site.TwitterUrl, site.InstagramUrl, site.TikTokUrl }
+            .Where(u => !string.IsNullOrWhiteSpace(u)).ToArray();
+        var graph = new object[]
+        {
+            new Dictionary<string, object>
+            {
+                ["@type"] = "WebSite",
+                ["@id"] = siteUrl + "#website",
+                ["url"] = siteUrl,
+                ["name"] = site.SiteTitleAr,
+                ["alternateName"] = new[] { site.BrandNameAr, "Core Audit" },
+                ["inLanguage"] = "ar",
+                ["publisher"] = new Dictionary<string, object> { ["@id"] = siteUrl + "#organization" }
+            },
+            new Dictionary<string, object>
+            {
+                ["@type"] = "Organization",
+                ["@id"] = siteUrl + "#organization",
+                ["name"] = site.BrandNameAr,
+                ["alternateName"] = new[] { site.SiteTitleAr, "Core Audit" },
+                ["url"] = siteUrl,
+                ["logo"] = logoUrl,
+                ["email"] = site.Email,
+                ["sameAs"] = sameAs
+            }
+        };
+        // Arabic kept readable; HTML-sensitive characters (<, >, &, ') are still escaped,
+        // so the JSON cannot break out of the <script> element.
+        jsonLd = JsonSerializer.Serialize(
+            new Dictionary<string, object> { ["@context"] = "https://schema.org", ["@graph"] = graph },
+            new JsonSerializerOptions { Encoder = JavaScriptEncoder.Create(UnicodeRanges.All) });
+    }
 }
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@(pageTitle != null ? $"{pageTitle} | " : "")@site.SiteTitleAr</title>
+    <title>@fullTitle</title>
     <meta name="description" content="@metaDescription" />
+    <link rel="canonical" href="@canonicalUrl" />
     <meta name="theme-color" content="#1b2a4a" />
-    <meta property="og:title" content="@site.SiteTitleAr" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="@fullTitle" />
     <meta property="og:site_name" content="@site.SiteTitleAr" />
     <meta property="og:locale" content="ar_SA" />
     <meta property="og:description" content="@metaDescription" />
     <meta property="og:type" content="website" />
+    <meta property="og:url" content="@canonicalUrl" />
+    <meta property="og:image" content="@logoUrl" />
+    <meta property="og:image:alt" content="شعار @site.BrandNameAr" />
 
-    <link rel="icon" type="image/svg+xml" href="~/favicon.svg" />
-    <link rel="icon" type="image/png" sizes="32x32" href="~/favicon-32.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="~/favicon-16.png" />
-    <link rel="apple-touch-icon" sizes="180x180" href="~/apple-touch-icon.png" />
-    <link rel="icon" type="image/x-icon" href="~/favicon.ico" />
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="@fullTitle" />
+    <meta name="twitter:description" content="@metaDescription" />
+    <meta name="twitter:image" content="@logoUrl" />
+
+    <!-- Favicons generated from the official Core Audit logo (square, multiples of 48px for Google) -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" sizes="16x16 32x32 48x48" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png" />
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png" />
+    <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+
+    @if (jsonLd != null)
+    {
+        <script type="application/ld+json">@Html.Raw(jsonLd)</script>
+    }
 
     <!-- Bootstrap 5.3.3 RTL (served locally to avoid CDN/SRI failures) -->
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.rtl.min.css" />
