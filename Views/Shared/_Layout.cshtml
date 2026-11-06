@@ -9,10 +9,12 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@(pageTitle != null ? $"{pageTitle} | " : "")@site.BrandNameAr - Core Audit</title>
+    <title>@(pageTitle != null ? $"{pageTitle} | " : "")@site.SiteTitleAr</title>
     <meta name="description" content="@metaDescription" />
     <meta name="theme-color" content="#1b2a4a" />
-    <meta property="og:title" content="@site.BrandNameAr - @site.BrandNameEn" />
+    <meta property="og:title" content="@site.SiteTitleAr" />
+    <meta property="og:site_name" content="@site.SiteTitleAr" />
+    <meta property="og:locale" content="ar_SA" />
     <meta property="og:description" content="@metaDescription" />
     <meta property="og:type" content="website" />
 

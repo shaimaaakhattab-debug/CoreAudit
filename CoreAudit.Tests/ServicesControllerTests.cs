@@ -34,13 +34,18 @@ public class ServicesControllerTests
         Assert.IsType<NotFoundResult>(BuildController().Details("unknown-slug"));
     }
 
+    [Fact]
+    public void Removed_business_consulting_service_returns_not_found()
+    {
+        Assert.IsType<NotFoundResult>(BuildController().Details("business-consulting"));
+    }
+
     [Theory]
     [InlineData("external-audit")]
     [InlineData("accounting-bookkeeping")]
     [InlineData("tax-financial-consulting")]
     [InlineData("internal-audit-risk")]
     [InlineData("financial-reporting")]
-    [InlineData("business-consulting")]
     [InlineData("judicial-support")]
     public void Details_returns_view_with_model_for_every_service(string slug)
     {

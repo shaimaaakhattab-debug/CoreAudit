@@ -18,9 +18,10 @@ public class ContactFormModel
     [Display(Name = "البريد الإلكتروني")]
     public string Email { get; set; } = "";
 
-    [Phone(ErrorMessage = "يرجى إدخال رقم هاتف صحيح.")]
-    [StringLength(30, ErrorMessage = "رقم الهاتف طويل جدًا.")]
-    [Display(Name = "رقم الهاتف (اختياري)")]
+    [Required(ErrorMessage = "رقم الجوال مطلوب.")]
+    [Phone(ErrorMessage = "يرجى إدخال رقم جوال صحيح.")]
+    [StringLength(30, ErrorMessage = "رقم الجوال طويل جدًا.")]
+    [Display(Name = "رقم الجوال")]
     public string? Phone { get; set; }
 
     [Required(ErrorMessage = "يرجى اختيار الخدمة المطلوبة.")]

@@ -12,6 +12,13 @@ public class SiteSettings
     public string BrandNameAr { get; set; } = "شركة كور أوديت";
     public string BrandSubtitleAr { get; set; } = "محاسبون ومراجعون قانونيون";
 
+    /// <summary>
+    /// Global site title used only in the browser tab (&lt;title&gt;) and SEO / Open Graph
+    /// metadata. Kept separate from <see cref="BrandNameAr"/> so the visible branding in the
+    /// header, hero and footer is unaffected.
+    /// </summary>
+    public string SiteTitleAr { get; set; } = "شركة كور أوديت محاسبون ومراجعون قانونيون";
+
     public string Domain { get; set; } = "coreauditcpa.com";
 
     /// <summary>Official contact email.</summary>

@@ -7,11 +7,11 @@ namespace CoreAudit.Tests;
 public class ContentServiceTests
 {
     [Fact]
-    public void Judicial_support_is_the_seventh_and_last_service()
+    public void Judicial_support_is_the_sixth_and_last_service()
     {
         var services = new ContentService().GetServices();
 
-        Assert.Equal(7, services.Count);
+        Assert.Equal(6, services.Count);
         var last = services[^1];
         Assert.Equal("judicial-support", last.Slug);
         Assert.Equal("الدعم القضائي", last.TitleAr);
@@ -109,7 +109,16 @@ public class ContentServiceTests
             "نقدم في كور أوديت خدمات مراجعة مهنية تهدف إلى دعم موثوقية ووضوح التقارير المالية وتعزيز الثقة في البيانات المعروضة. نعمل بدقة وحياد وسرية، ونعرض ملاحظاتنا بصورة منظمة وواضحة.",
             services.Single(s => s.Slug == "external-audit").IntroAr);
         Assert.Equal(
-            "هل تحتاج إلى رؤى تدعم قراراتك؟",
-            services.Single(s => s.Slug == "business-consulting").CtaHeadingAr);
+            "هل ترغب في تقارير مالية أوضح؟",
+            services.Single(s => s.Slug == "financial-reporting").CtaHeadingAr);
+    }
+
+    [Fact]
+    public void Business_consulting_service_has_been_removed()
+    {
+        var services = new ContentService().GetServices();
+
+        Assert.DoesNotContain(services, s => s.Slug == "business-consulting");
+        Assert.DoesNotContain(services, s => s.TitleAr == "استشارات الأعمال");
     }
 }

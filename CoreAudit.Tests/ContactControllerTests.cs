@@ -16,6 +16,7 @@ public class ContactControllerTests
     {
         Name = "عميل تجريبي",
         Email = "visitor@example.com",
+        Phone = "0500000000",
         Service = "المراجعة الخارجية",
         Message = "هذه رسالة اختبار للتأكد من عمل النموذج."
     };
