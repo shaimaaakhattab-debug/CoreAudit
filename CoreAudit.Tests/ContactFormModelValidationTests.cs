@@ -52,6 +52,37 @@ public class ContactFormModelValidationTests
         Assert.Contains("يرجى إدخال رقم جوال صحيح.", PhoneErrors(ValidModel("not-a-number")));
     }
 
+    private static IEnumerable<string?> EmailErrors(ContactFormModel model) =>
+        Validate(model)
+            .Where(r => r.MemberNames.Contains(nameof(ContactFormModel.Email)))
+            .Select(r => r.ErrorMessage);
+
+    [Fact]
+    public void Empty_email_is_allowed_when_mobile_is_valid()
+    {
+        var model = ValidModel("0500000000");
+        model.Email = null; // MVC binds an empty field as null
+        Assert.Empty(Validate(model));
+    }
+
+    [Theory]
+    [InlineData("not-an-email")]
+    [InlineData("visitor@")]
+    [InlineData("@example.com")]
+    public void Invalid_email_is_rejected_when_provided(string email)
+    {
+        var model = ValidModel("0500000000");
+        model.Email = email;
+        Assert.Contains("يرجى إدخال بريد إلكتروني صحيح.", EmailErrors(model));
+    }
+
+    [Fact]
+    public void Email_has_no_required_rule()
+    {
+        var prop = typeof(ContactFormModel).GetProperty(nameof(ContactFormModel.Email))!;
+        Assert.Empty(prop.GetCustomAttributes(typeof(RequiredAttribute), inherit: true));
+    }
+
     [Fact]
     public void Existing_length_validation_is_kept()
     {

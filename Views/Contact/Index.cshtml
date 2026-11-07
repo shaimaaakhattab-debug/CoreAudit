@@ -127,26 +127,26 @@
                         </div>
 
                         <div class="mb-3">
-                            <label asp-for="Name" class="form-label">الاسم</label>
+                            <label asp-for="Name" class="form-label">الاسم <span class="field-note field-note-required">(مطلوب)</span></label>
                             <input asp-for="Name" class="form-control" autocomplete="name" aria-required="true" />
                             <span asp-validation-for="Name" class="text-danger"></span>
                         </div>
 
                         <div class="row">
                             <div class="col-md-6 mb-3">
-                                <label asp-for="Email" class="form-label">البريد الإلكتروني</label>
-                                <input asp-for="Email" class="form-control" type="email" dir="ltr" autocomplete="email" aria-required="true" />
+                                <label asp-for="Email" class="form-label">البريد الإلكتروني <span class="field-note">(اختياري)</span></label>
+                                <input asp-for="Email" class="form-control" type="email" dir="ltr" autocomplete="email" />
                                 <span asp-validation-for="Email" class="text-danger"></span>
                             </div>
                             <div class="col-md-6 mb-3">
-                                <label asp-for="Phone" class="form-label">رقم الجوال</label>
+                                <label asp-for="Phone" class="form-label">رقم الجوال <span class="field-note field-note-required">(مطلوب)</span></label>
                                 <input asp-for="Phone" class="form-control" type="tel" dir="ltr" autocomplete="tel" required aria-required="true" />
                                 <span asp-validation-for="Phone" class="text-danger"></span>
                             </div>
                         </div>
 
                         <div class="mb-3">
-                            <label asp-for="Service" class="form-label">الخدمة المطلوبة</label>
+                            <label asp-for="Service" class="form-label">الخدمة المطلوبة <span class="field-note field-note-required">(مطلوب)</span></label>
                             <select asp-for="Service" class="form-select" aria-required="true">
                                 <option value="">— اختر الخدمة —</option>
                                 @foreach (var s in services)
@@ -159,7 +159,7 @@
                         </div>
 
                         <div class="mb-3">
-                            <label asp-for="Message" class="form-label">الرسالة</label>
+                            <label asp-for="Message" class="form-label">الرسالة <span class="field-note field-note-required">(مطلوب)</span></label>
                             <textarea asp-for="Message" class="form-control" rows="5" aria-required="true"></textarea>
                             <span asp-validation-for="Message" class="text-danger"></span>
                         </div>

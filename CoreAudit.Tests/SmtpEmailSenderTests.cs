@@ -115,6 +115,21 @@ public class SmtpEmailSenderTests
     }
 
     [Fact]
+    public void Message_without_visitor_email_builds_with_no_reply_to()
+    {
+        var model = ValidModel();
+        model.Email = null; // optional field left empty
+
+        var message = SmtpEmailSender.BuildMessage(new EmailSettings(), model);
+
+        Assert.Empty(message.ReplyTo.Mailboxes);
+        Assert.Equal(CompanyEmail, Assert.Single(message.To.Mailboxes).Address);
+        Assert.Contains("البريد الإلكتروني: غير محدد", message.TextBody);
+        // The HTML body entity-encodes all values, so decode before checking.
+        Assert.Contains("غير محدد", System.Net.WebUtility.HtmlDecode(message.HtmlBody));
+    }
+
+    [Fact]
     public void Recipient_is_configurable()
     {
         var settings = new EmailSettings { ToAddress = "accounts@coreauditcpa.com" };

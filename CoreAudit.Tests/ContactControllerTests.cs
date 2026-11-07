@@ -21,6 +21,24 @@ public class ContactControllerTests
         Message = "هذه رسالة اختبار للتأكد من عمل النموذج."
     };
 
+    [Fact]
+    public async Task Submission_without_email_is_sent_and_redirects()
+    {
+        var sender = new Mock<IEmailSender>();
+        sender.Setup(s => s.SendContactMessageAsync(It.IsAny<ContactFormModel>(), It.IsAny<CancellationToken>()))
+              .ReturnsAsync(ContactDeliveryResult.Sent);
+        var store = new Mock<IContactMessageStore>();
+
+        var controller = BuildController(sender, store);
+        var model = ValidModel();
+        model.Email = null;
+
+        var result = await controller.Index(model, CancellationToken.None);
+
+        Assert.IsType<RedirectToActionResult>(result);
+        sender.Verify(s => s.SendContactMessageAsync(It.Is<ContactFormModel>(m => m.Email == null), It.IsAny<CancellationToken>()), Times.Once);
+    }
+
     private static ContactController BuildController(
         Mock<IEmailSender> sender,
         Mock<IContactMessageStore> store)

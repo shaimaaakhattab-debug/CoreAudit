@@ -351,6 +351,8 @@ a:hover { color: var(--gold-500); }
     border: 1px solid #eee;
 }
 .form-label { font-weight: 600; color: var(--navy-800); }
+/* "(مطلوب)" / "(اختياري)" marker after a contact-form label: same font, lighter and smaller. */
+.form-label .field-note { font-weight: 400; font-size: .85em; color: var(--muted); margin-inline-start: .15rem; white-space: nowrap; }
 .form-control, .form-select { border-radius: 10px; padding: .7rem .9rem; border: 1px solid #d8dbe0; }
 /* Honeypot anti-spam field — hidden from humans, still submitted by bots.
    Uses the clip() visually-hidden pattern (no negative offset) so it creates no

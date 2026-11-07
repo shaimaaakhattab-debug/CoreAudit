@@ -13,10 +13,11 @@ public class ContactFormModel
     [Display(Name = "الاسم")]
     public string Name { get; set; } = "";
 
-    [Required(ErrorMessage = "البريد الإلكتروني مطلوب.")]
+    // Optional. Nullable so MVC does not treat it as implicitly required; the format is
+    // still validated whenever a value is entered ([EmailAddress] accepts null).
     [EmailAddress(ErrorMessage = "يرجى إدخال بريد إلكتروني صحيح.")]
     [Display(Name = "البريد الإلكتروني")]
-    public string Email { get; set; } = "";
+    public string? Email { get; set; }
 
     [Required(ErrorMessage = "رقم الجوال مطلوب.")]
     [Phone(ErrorMessage = "يرجى إدخال رقم جوال صحيح.")]

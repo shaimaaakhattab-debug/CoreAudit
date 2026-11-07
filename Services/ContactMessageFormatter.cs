@@ -18,13 +18,14 @@ public static class ContactMessageFormatter
     public static string BuildHtml(ContactFormModel model)
     {
         var phone = string.IsNullOrWhiteSpace(model.Phone) ? "غير محدد" : model.Phone;
+        var email = string.IsNullOrWhiteSpace(model.Email) ? "غير محدد" : model.Email;
 
         var html = new StringBuilder();
         html.Append("<div dir=\"rtl\" style=\"font-family:Tahoma,Arial,sans-serif;font-size:14px;color:#1b2a4a;\">");
         html.Append("<h2 style=\"color:#1b2a4a;\">رسالة جديدة من نموذج التواصل</h2>");
         html.Append("<table cellpadding=\"6\" style=\"border-collapse:collapse;\">");
         AppendRow(html, "الاسم", model.Name);
-        AppendRow(html, "البريد الإلكتروني", model.Email);
+        AppendRow(html, "البريد الإلكتروني", email);
         AppendRow(html, "رقم الهاتف", phone);
         AppendRow(html, "الخدمة المطلوبة", model.Service);
         html.Append("</table>");
@@ -37,11 +38,12 @@ public static class ContactMessageFormatter
     public static string BuildPlainText(ContactFormModel model)
     {
         var phone = string.IsNullOrWhiteSpace(model.Phone) ? "غير محدد" : model.Phone;
+        var email = string.IsNullOrWhiteSpace(model.Email) ? "غير محدد" : model.Email;
         return new StringBuilder()
             .AppendLine("رسالة جديدة من نموذج التواصل")
             .AppendLine($"التاريخ: {DateTime.Now:yyyy-MM-dd HH:mm:ss}")
             .AppendLine($"الاسم: {model.Name}")
-            .AppendLine($"البريد الإلكتروني: {model.Email}")
+            .AppendLine($"البريد الإلكتروني: {email}")
             .AppendLine($"رقم الهاتف: {phone}")
             .AppendLine($"الخدمة المطلوبة: {model.Service}")
             .AppendLine()
